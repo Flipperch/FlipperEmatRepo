@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="LISTA_MEDIA_HISTORICO_ESCOLAR" targetNamespace="http://tempuri.org/LISTA_MEDIA_HISTORICO_ESCOLAR.xsd" xmlns:mstns="http://tempuri.org/LISTA_MEDIA_HISTORICO_ESCOLAR.xsd" xmlns="http://tempuri.org/LISTA_MEDIA_HISTORICO_ESCOLAR.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="LISTA_MEDIA_HISTORICO_ESCOLAR" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="LISTA_MEDIA_HISTORICO_ESCOLAR" msprop:Generator_UserDSName="LISTA_MEDIA_HISTORICO_ESCOLAR">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="LISTA_MEDIA_HISTORICO_ESCOLAR" msprop:Generator_TableClassName="LISTA_MEDIA_HISTORICO_ESCOLARDataTable" msprop:Generator_TableVarName="tableLISTA_MEDIA_HISTORICO_ESCOLAR" msprop:Generator_TablePropName="_LISTA_MEDIA_HISTORICO_ESCOLAR" msprop:Generator_RowDeletingName="LISTA_MEDIA_HISTORICO_ESCOLARRowDeleting" msprop:Generator_RowChangingName="LISTA_MEDIA_HISTORICO_ESCOLARRowChanging" msprop:Generator_RowEvHandlerName="LISTA_MEDIA_HISTORICO_ESCOLARRowChangeEventHandler" msprop:Generator_RowDeletedName="LISTA_MEDIA_HISTORICO_ESCOLARRowDeleted" msprop:Generator_UserTableName="LISTA_MEDIA_HISTORICO_ESCOLAR" msprop:Generator_RowChangedName="LISTA_MEDIA_HISTORICO_ESCOLARRowChanged" msprop:Generator_RowEvArgName="LISTA_MEDIA_HISTORICO_ESCOLARRowChangeEvent" msprop:Generator_RowClassName="LISTA_MEDIA_HISTORICO_ESCOLARRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dis" msprop:Generator_ColumnVarNameInTable="columndis" msprop:Generator_ColumnPropNameInRow="dis" msprop:Generator_ColumnPropNameInTable="disColumn" msprop:Generator_UserColumnName="dis" type="xs:string" minOccurs="0" />
+              <xs:element name="ins" msprop:Generator_ColumnVarNameInTable="columnins" msprop:Generator_ColumnPropNameInRow="ins" msprop:Generator_ColumnPropNameInTable="insColumn" msprop:Generator_UserColumnName="ins" type="xs:string" minOccurs="0" />
+              <xs:element name="mu" msprop:Generator_ColumnVarNameInTable="columnmu" msprop:Generator_ColumnPropNameInRow="mu" msprop:Generator_ColumnPropNameInTable="muColumn" msprop:Generator_UserColumnName="mu" type="xs:string" minOccurs="0" />
+              <xs:element name="uf" msprop:Generator_ColumnVarNameInTable="columnuf" msprop:Generator_ColumnPropNameInRow="uf" msprop:Generator_ColumnPropNameInTable="ufColumn" msprop:Generator_UserColumnName="uf" type="xs:string" minOccurs="0" />
+              <xs:element name="dt" msprop:Generator_ColumnVarNameInTable="columndt" msprop:Generator_ColumnPropNameInRow="dt" msprop:Generator_ColumnPropNameInTable="dtColumn" msprop:Generator_UserColumnName="dt" type="xs:string" minOccurs="0" />
+              <xs:element name="not" msprop:Generator_ColumnVarNameInTable="columnnot" msprop:Generator_ColumnPropNameInRow="not" msprop:Generator_ColumnPropNameInTable="notColumn" msprop:Generator_UserColumnName="not" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

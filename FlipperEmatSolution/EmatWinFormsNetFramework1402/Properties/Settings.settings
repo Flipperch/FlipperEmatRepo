@@ -1,0 +1,46 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Flipper.Ematricula.App.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BDMatriculaConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\BD\BDMatricula.mdf;Integrated Security=True;Connect Timeout=30&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\BD\BDMatricula.mdf;Integrated Security=True;Connect Timeout=30</Value>
+    </Setting>
+    <Setting Name="BDMatriculaConnectionString1" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\BDMatricula.mdf;Integrated Security=True;Connect Timeout=30&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\BDMatricula.mdf;Integrated Security=True;Connect Timeout=30</Value>
+    </Setting>
+    <Setting Name="bd_matConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=SERVMAT\SQLEXPRESS;Initial Catalog=bd-mat;Persist Security Info=True;User ID=userserv;Password=senha&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=SERVMAT\SQLEXPRESS;Initial Catalog=bd-mat;Persist Security Info=True;User ID=userserv;Password=senha</Value>
+    </Setting>
+    <Setting Name="bd_matFLIPPERNOTE" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=FLIPPER-NOTE\SQLEXPRESS;Initial Catalog=bd-mat;Persist Security Info=True;User ID=userserv;Password=senha&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=FLIPPER-NOTE\SQLEXPRESS;Initial Catalog=bd-mat;Persist Security Info=True;User ID=userserv;Password=senha</Value>
+    </Setting>
+    <Setting Name="bd_mat_americanaConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=SERVIDOR;Initial Catalog=bd-mat-americana;User ID=userserv;Password=senha&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=SERVIDOR;Initial Catalog=bd-mat-americana;User ID=userserv;Password=senha</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,1289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25851E29-D9BC-4B18-89DC-21DAB2FA7331}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EmatWinFormsNetFramework1402</RootNamespace>
+    <AssemblyName>EmatWinFormsNetFramework1402</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>C:\Users\Flipper\Desktop\emat\votorantim\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>\\servidor\DADOS_SISTEMA\SISTEMA\</InstallUrl>
+    <TargetCulture>pt-BR</TargetCulture>
+    <ProductName>E-Mat</ProductName>
+    <PublisherName>E-mat</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.4.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <BootstrapperComponentsUrl>C:\Users\Flipper\Documents\Dev\CodFonte\Emat\E-Matricula\E-Matricula</BootstrapperComponentsUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B6254E9D0FD53746A22464E4C9F842592A7B6942</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>E-Matricula_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logoEmat.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>EmatWinFormsNetFramework1402.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Npgsql 2.1.3 Net4.0\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\DisciplinaAluno.cs" />
+    <Compile Include="Classes\EnsinoSistema.cs" />
+    <Compile Include="DAO\MovimentacaoDAO.cs" />
+    <Compile Include="Enumeradores\CorOrigemEtnica.cs" />
+    <Compile Include="Enumeradores\Ensino.cs" />
+    <Compile Include="Enumeradores\EstadoCivil.cs" />
+    <Compile Include="Enumeradores\NivelAcesso.cs" />
+    <Compile Include="Enumeradores\Sexo.cs" />
+    <Compile Include="Enumeradores\SituacaoAluno.cs" />
+    <Compile Include="Enumeradores\TipoDeficiencia.cs" />
+    <Compile Include="Formularios\frmAtividadeExtra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmAtividadeExtra.Designer.cs">
+      <DependentUpon>frmAtividadeExtra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmCadastrarEndereco.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmCadastrarEndereco.Designer.cs">
+      <DependentUpon>frmCadastrarEndereco.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmConcluirEnsinoAluno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmConcluirEnsinoAluno.Designer.cs">
+      <DependentUpon>frmConcluirEnsinoAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmImprimirRaLote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmImprimirRaLote.Designer.cs">
+      <DependentUpon>frmImprimirRaLote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmModelos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmModelos.Designer.cs">
+      <DependentUpon>frmModelos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmInativarAlunos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmInativarAlunos.Designer.cs">
+      <DependentUpon>frmInativarAlunos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmOpcoesFundamentacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmOpcoesFundamentacao.Designer.cs">
+      <DependentUpon>frmOpcoesFundamentacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmUsuario.Designer.cs">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frRelatoriosSecretaria.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frRelatoriosSecretaria.designer.cs">
+      <DependentUpon>frRelatoriosSecretaria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modelo\ALUNO.cs" />
+    <Compile Include="Modelo\AREA.cs" />
+    <Compile Include="Modelo\ATENDIMENTO.cs" />
+    <Compile Include="Modelo\ATENDIMENTO_ALUNO.cs" />
+    <Compile Include="Modelo\ATIVIDADE_EXTRA.cs" />
+    <Compile Include="Modelo\CARTAO_ACESSO.cs" />
+    <Compile Include="Modelo\CIDADE.cs" />
+    <Compile Include="Modelo\DEFICIENCIA.cs" />
+    <Compile Include="Modelo\DEFICIENCIA_ALUNO.cs" />
+    <Compile Include="Modelo\DEFICIENCIA_USUARIO.cs" />
+    <Compile Include="Modelo\DISCIPLINA.cs" />
+    <Compile Include="Modelo\DISCIPLINA_ALUNO.cs" />
+    <Compile Include="Modelo\EMPREGO_ALUNO.cs" />
+    <Compile Include="Modelo\ENDERECO_ALUNO.cs" />
+    <Compile Include="Modelo\ENSINO_ALUNO.cs" />
+    <Compile Include="Modelo\ERROR_LOG.cs" />
+    <Compile Include="Modelo\HISTORICO_ESCOLAR.cs" />
+    <Compile Include="Modelo\LOCAL_NASCIMENTO.cs" />
+    <Compile Include="Modelo\LOG_ACESSO.cs" />
+    <Compile Include="Modelo\LOG_CATRACA.cs" />
+    <Compile Include="Modelo\MEDIA.cs" />
+    <Compile Include="Modelo\Modelo.cs" />
+    <Compile Include="Modelo\MOVIMENTACAO.cs" />
+    <Compile Include="Modelo\NOTA.cs" />
+    <Compile Include="Modelo\PAIS.cs" />
+    <Compile Include="Modelo\PRINT_LOG.cs" />
+    <Compile Include="Modelo\PROFESSOR.cs" />
+    <Compile Include="Modelo\REMATRICULA.cs" />
+    <Compile Include="Modelo\UF.cs" />
+    <Compile Include="Modelo\USUARIO.cs" />
+    <Compile Include="Formularios\frRelatoriosAtendimentos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frRelatoriosAtendimentos.designer.cs">
+      <DependentUpon>frRelatoriosAtendimentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\DatasetParaRelatorios\LISTA_MEDIA_HISTORICO_ESCOLAR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LISTA_MEDIA_HISTORICO_ESCOLAR.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Geral\csRelatorios.cs" />
+    <Compile Include="Relatorios\DatasetParaRelatorios\ETIQUETA_PRONTUARIO.Designer.cs" />
+    <Compile Include="Relatorios\DatasetParaRelatorios\LISTA_ALUNOS.cs" />
+    <Compile Include="Relatorios\DatasetParaRelatorios\LISTA_ALUNOS.Designer.cs" />
+    <Compile Include="Relatorios\DatasetParaRelatorios\RA.cs" />
+    <Compile Include="Relatorios\DatasetParaRelatorios\RA.Designer.cs" />
+    <Compile Include="Relatorios\Escolas\Sorocaba\atestado_eliminacao_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>atestado_eliminacao_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\bkpp.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>bkpp.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\declaracao_conclusao_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>declaracao_conclusao_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\declaracao_etec_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>declaracao_etec_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\declaracao_inss_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>declaracao_inss_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\declaracao_matricula_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>declaracao_matricula_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\etiqueta_prontuario_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>etiqueta_prontuario_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\historico_f_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>historico_f_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\historico_m_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>historico_m_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\passaporte_f.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>passaporte_f.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\passaporte_m.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>passaporte_m.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\ra_sorocaba.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ra_sorocaba.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\RelatoriosSorocaba.cs" />
+    <Compile Include="Relatorios\Escolas\Sorocaba\rptEtiquetaProntuario50x101Carta.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptEtiquetaProntuario50x101Carta.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\rptEtiquetas10_.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptEtiquetas10_.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Sorocaba\rptRequerimentoMatricula.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptRequerimentoMatricula.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\RelatoriosVotorantim.cs" />
+    <Compile Include="Relatorios\Escolas\Votorantim\rptAtestadoEliminacao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptAtestadoEliminacao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptCertificado.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptCertificado.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptDeclaracaoConclusao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDeclaracaoConclusao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptDeclaracaoEliminacao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDeclaracaoEliminacao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptDeclaracaoInss.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDeclaracaoInss.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptDeclaracaoMatricula.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptDeclaracaoMatricula.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptHistoricoEscolarFundamental.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptHistoricoEscolarFundamental.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptHistoricoEscolarMedio.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptHistoricoEscolarMedio.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptHistoricoEscolarMedio2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptHistoricoEscolarMedio2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptPassaporte.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptPassaporte.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptRaLote.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptRaLote.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Escolas\Votorantim\rptRequerimentoMatricula.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptRequerimentoMatricula.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Formularios\frCrystalReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frCrystalReport.designer.cs">
+      <DependentUpon>frCrystalReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Relatorios\Geral\DadosAlunoParaImpressao.cs" />
+    <Compile Include="Relatorios\Geral\detalhes_disciplinas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>detalhes_disciplinas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\lista_inativacao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lista_inativacao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\Relatorios.cs" />
+    <Compile Include="Relatorios\Geral\relatorio_atendimentos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>relatorio_atendimentos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\relatorio_qtd_alunos_disciplina.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>relatorio_qtd_alunos_disciplina.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\relatorio_qtd_atendimentos.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>relatorio_qtd_atendimentos.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\relatorio_secretaria.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>relatorio_secretaria.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\relatorio_usuarios_matriculas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>relatorio_usuarios_matriculas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\rptListaAlunosDisciplina.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptListaAlunosDisciplina.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Relatorios\Geral\rptListaAlunosInativacao.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptListaAlunosInativacao.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Utils\EmatriculaConfigurationSettings.cs" />
+    <Compile Include="Utils\EnsinoSistemaEstatica.cs" />
+    <Compile Include="DAO\AlunoDAO.cs" />
+    <Compile Include="DAO\AreaDAO.cs" />
+    <Compile Include="DAO\AtendimentoAlunoDAO.cs" />
+    <Compile Include="DAO\AtendimentoDAO.cs" />
+    <Compile Include="DAO\AtividadeExtraDAO.cs" />
+    <Compile Include="DAO\CidadeDAO.cs" />
+    <Compile Include="DAO\DeficienciaDAO.cs" />
+    <Compile Include="DAO\DeficienciaPessoaDAO.cs" />
+    <Compile Include="DAO\DisciplinaDAO.cs" />
+    <Compile Include="DAO\DisciplinaAlunoDAO.cs" />
+    <Compile Include="DAO\EmpregoDAO.cs" />
+    <Compile Include="DAO\EnderecoDAO.cs" />
+    <Compile Include="DAO\EnsinoAlunoDAO.cs" />
+    <Compile Include="DAO\HistoricoEscolarDAO.cs" />
+    <Compile Include="DAO\LocalNascimentoDAO.cs" />
+    <Compile Include="DAO\MediaDAO.cs" />
+    <Compile Include="DAO\NotaDAO.cs" />
+    <Compile Include="DAO\PaisDAO.cs" />
+    <Compile Include="DAO\ProfessorDAO.cs" />
+    <Compile Include="DAO\RematriculaDAO.cs" />
+    <Compile Include="DAO\UfDAO.cs" />
+    <Compile Include="DAO\UsuarioDAO.cs" />
+    <Compile Include="Enumeradores\Enumeradores.cs" />
+    <Compile Include="Formularios\frControledeacesso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frControledeacesso.Designer.cs">
+      <DependentUpon>frControledeacesso.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmAluno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmAluno.Designer.cs">
+      <DependentUpon>frmAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmEliminacoes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmEliminacoes.Designer.cs">
+      <DependentUpon>frmEliminacoes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmExcluirAluno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmExcluirAluno.Designer.cs">
+      <DependentUpon>frmExcluirAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmImpressaoEtiqueta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmImpressaoEtiqueta.Designer.cs">
+      <DependentUpon>frmImpressaoEtiqueta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmDetalhesDisciplina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmDetalhesDisciplina.Designer.cs">
+      <DependentUpon>frmDetalhesDisciplina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmImprimir.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmImprimir.Designer.cs">
+      <DependentUpon>frmImprimir.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmMovimentacao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmMovimentacao.Designer.cs">
+      <DependentUpon>frmMovimentacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frHistoricoAluno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frHistoricoAluno.Designer.cs">
+      <DependentUpon>frHistoricoAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\csDetalhesAluno.cs" />
+    <Compile Include="Utils\csDetalhesDisciplina.cs" />
+    <Compile Include="Classes\FotoAluno.cs" />
+    <Compile Include="Classes\Aluno.cs" />
+    <Compile Include="Classes\Area.cs" />
+    <Compile Include="Classes\AtendimentoAluno.cs" />
+    <Compile Include="Classes\AtividadeExtra.cs" />
+    <Compile Include="Classes\Cidade.cs" />
+    <Compile Include="Classes\Disciplina.cs" />
+    <Compile Include="Classes\Emprego.cs" />
+    <Compile Include="Classes\Endereco.cs" />
+    <Compile Include="Classes\EnsinoAluno.cs" />
+    <Compile Include="Classes\HistoricoEscolar.cs" />
+    <Compile Include="Classes\Movimentacao.cs" />
+    <Compile Include="Classes\Media.cs" />
+    <Compile Include="Classes\LocalNascimento.cs" />
+    <Compile Include="Classes\Deficiencia.cs" />
+    <Compile Include="Classes\Nota.cs" />
+    <Compile Include="Classes\Pais.cs" />
+    <Compile Include="Classes\Pessoa.cs" />
+    <Compile Include="Classes\Professor.cs" />
+    <Compile Include="Classes\Rematricula.cs" />
+    <Compile Include="Classes\Atendimento.cs" />
+    <Compile Include="Classes\DeficienciaPessoa.cs" />
+    <Compile Include="Classes\Uf.cs" />
+    <Compile Include="Classes\Usuario.cs" />
+    <Compile Include="Controles\dgvAtendimentosAluno.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controles\dgvAtendimentosAluno.Designer.cs">
+      <DependentUpon>dgvAtendimentosAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controles\ltvAreas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controles\ltvAreas.Designer.cs">
+      <DependentUpon>ltvAreas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controles\ltvDisciplinas.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controles\ltvDisciplinas.Designer.cs">
+      <DependentUpon>ltvDisciplinas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controles\tlpDisciplinaAluno.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controles\tlpDisciplinaAluno.Designer.cs">
+      <DependentUpon>tlpDisciplinaAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorLog\ErrorHandleService.cs" />
+    <Compile Include="Formularios\frmSelecionarAtendente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmSelecionarAtendente.Designer.cs">
+      <DependentUpon>frmSelecionarAtendente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\csMediasExtra.cs" />
+    <Compile Include="Utils\csExpressaoMatematica.cs" />
+    <Compile Include="Formularios\frAtribuicaoDisciplina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frAtribuicaoDisciplina.Designer.cs">
+      <DependentUpon>frAtribuicaoDisciplina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmModificarAtendimento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmModificarAtendimento.Designer.cs">
+      <DependentUpon>frmModificarAtendimento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmPassaporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmPassaporte.Designer.cs">
+      <DependentUpon>frmPassaporte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmProcurarAluno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmProcurarAluno.Designer.cs">
+      <DependentUpon>frmProcurarAluno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BDMatriculaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BDMatriculaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmConfiguracoes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmConfiguracoes.Designer.cs">
+      <DependentUpon>frmConfiguracoes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmObterFotos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmObterFotos.Designer.cs">
+      <DependentUpon>frmObterFotos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\geraBarcode.cs" />
+    <Compile Include="Utils\Hardworker.cs" />
+    <Compile Include="Service References\WSCorreios\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\IEmatriculaSettings.cs" />
+    <Compile Include="Utils\SqlHelper.cs" />
+    <Compile Include="_bd_mat_americanaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_bd_mat_americanaDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frConf_atendimento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frConf_atendimento.Designer.cs">
+      <DependentUpon>frConf_atendimento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmHistoricoEscolar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmHistoricoEscolar.Designer.cs">
+      <DependentUpon>frmHistoricoEscolar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\csControleVersao.cs" />
+    <Compile Include="Formularios\frmEmatricula.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmEmatricula.Designer.cs">
+      <DependentUpon>frmEmatricula.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmSplash.Designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmAtualizacoes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmAtualizacoes.Designer.cs">
+      <DependentUpon>frmAtualizacoes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmSobre.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmSobre.Designer.cs">
+      <DependentUpon>frmSobre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\csUsuarioLogado.cs" />
+    <Compile Include="Formularios\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Formularios\frmTrocaSenha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Formularios\frmTrocaSenha.Designer.cs">
+      <DependentUpon>frmTrocaSenha.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Formularios\frControledeacesso.resx">
+      <DependentUpon>frControledeacesso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmAluno.resx">
+      <DependentUpon>frmAluno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmAtividadeExtra.resx">
+      <DependentUpon>frmAtividadeExtra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmCadastrarEndereco.resx">
+      <DependentUpon>frmCadastrarEndereco.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmConcluirEnsinoAluno.resx">
+      <DependentUpon>frmConcluirEnsinoAluno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmEliminacoes.resx">
+      <DependentUpon>frmEliminacoes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmExcluirAluno.resx">
+      <DependentUpon>frmExcluirAluno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmImpressaoEtiqueta.resx">
+      <DependentUpon>frmImpressaoEtiqueta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmDetalhesDisciplina.resx">
+      <DependentUpon>frmDetalhesDisciplina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmImprimir.resx">
+      <DependentUpon>frmImprimir.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmImprimirRaLote.resx">
+      <DependentUpon>frmImprimirRaLote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmMovimentacao.resx">
+      <DependentUpon>frmMovimentacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frHistoricoAluno.resx">
+      <DependentUpon>frHistoricoAluno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frAtribuicaoDisciplina.resx">
+      <DependentUpon>frAtribuicaoDisciplina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmModelos.resx">
+      <DependentUpon>frmModelos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmModificarAtendimento.resx">
+      <DependentUpon>frmModificarAtendimento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmOpcoesFundamentacao.resx">
+      <DependentUpon>frmOpcoesFundamentacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmPassaporte.resx">
+      <DependentUpon>frmPassaporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmProcurarAluno.resx">
+      <DependentUpon>frmProcurarAluno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmConfiguracoes.resx">
+      <DependentUpon>frmConfiguracoes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmSelecionarAtendente.resx">
+      <DependentUpon>frmSelecionarAtendente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmObterFotos.resx">
+      <DependentUpon>frmObterFotos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frConf_atendimento.resx">
+      <DependentUpon>frConf_atendimento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmHistoricoEscolar.resx">
+      <DependentUpon>frmHistoricoEscolar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmEmatricula.resx">
+      <DependentUpon>frmEmatricula.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmInativarAlunos.resx">
+      <DependentUpon>frmInativarAlunos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmUsuario.resx">
+      <DependentUpon>frmUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frRelatoriosSecretaria.resx">
+      <DependentUpon>frRelatoriosSecretaria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmAtualizacoes.resx">
+      <DependentUpon>frmAtualizacoes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmSobre.resx">
+      <DependentUpon>frmSobre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frmTrocaSenha.resx">
+      <DependentUpon>frmTrocaSenha.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\atestado_eliminacao_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>atestado_eliminacao_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\bkpp.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>bkpp.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\declaracao_conclusao_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>declaracao_conclusao_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\declaracao_etec_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>declaracao_etec_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\declaracao_inss_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>declaracao_inss_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\declaracao_matricula_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>declaracao_matricula_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\etiqueta_prontuario_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>etiqueta_prontuario_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\historico_f_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>historico_f_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\historico_m_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>historico_m_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\passaporte_f.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>passaporte_f.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\passaporte_m.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>passaporte_m.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\ra_sorocaba.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ra_sorocaba.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\rptEtiquetaProntuario50x101Carta.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptEtiquetaProntuario50x101Carta.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\rptEtiquetas10_.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptEtiquetas10_.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Sorocaba\rptRequerimentoMatricula.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptRequerimentoMatricula.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptAtestadoEliminacao.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptAtestadoEliminacao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptCertificado.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptCertificado.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptDeclaracaoConclusao.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDeclaracaoConclusao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptDeclaracaoEliminacao.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDeclaracaoEliminacao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptDeclaracaoInss.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDeclaracaoInss.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptDeclaracaoMatricula.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptDeclaracaoMatricula.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptHistoricoEscolarFundamental.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptHistoricoEscolarFundamental.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptHistoricoEscolarMedio.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptHistoricoEscolarMedio.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptHistoricoEscolarMedio2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptHistoricoEscolarMedio2.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptPassaporte.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptPassaporte.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptRaLote.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptRaLote.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Escolas\Votorantim\rptRequerimentoMatricula.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptRequerimentoMatricula.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frCrystalReport.resx">
+      <DependentUpon>frCrystalReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Formularios\frRelatoriosAtendimentos.resx">
+      <DependentUpon>frRelatoriosAtendimentos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\detalhes_disciplinas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>detalhes_disciplinas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\lista_inativacao.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>lista_inativacao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\relatorio_atendimentos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>relatorio_atendimentos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\relatorio_qtd_alunos_disciplina.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>relatorio_qtd_alunos_disciplina.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\relatorio_qtd_atendimentos.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>relatorio_qtd_atendimentos.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\relatorio_secretaria.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>relatorio_secretaria.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\relatorio_usuarios_matriculas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>relatorio_usuarios_matriculas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\rptListaAlunosDisciplina.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptListaAlunosDisciplina.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Relatorios\Geral\rptListaAlunosInativacao.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptListaAlunosInativacao.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="BDMatriculaDataSet.xsc">
+      <DependentUpon>BDMatriculaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="BDMatriculaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>BDMatriculaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BDMatriculaDataSet.xss">
+      <DependentUpon>BDMatriculaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Relatorios\DatasetParaRelatorios\ETIQUETA_PRONTUARIO.xsc">
+      <DependentUpon>ETIQUETA_PRONTUARIO.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\ETIQUETA_PRONTUARIO.xsd" />
+    <None Include="Relatorios\DatasetParaRelatorios\ETIQUETA_PRONTUARIO.xss">
+      <DependentUpon>ETIQUETA_PRONTUARIO.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\LISTA_ALUNOS.xsc">
+      <DependentUpon>LISTA_ALUNOS.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\LISTA_ALUNOS.xsd" />
+    <None Include="Relatorios\DatasetParaRelatorios\LISTA_ALUNOS.xss">
+      <DependentUpon>LISTA_ALUNOS.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\LISTA_MEDIA_HISTORICO_ESCOLAR.xsc">
+      <DependentUpon>LISTA_MEDIA_HISTORICO_ESCOLAR.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\LISTA_MEDIA_HISTORICO_ESCOLAR.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LISTA_MEDIA_HISTORICO_ESCOLAR.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\LISTA_MEDIA_HISTORICO_ESCOLAR.xss">
+      <DependentUpon>LISTA_MEDIA_HISTORICO_ESCOLAR.xsd</DependentUpon>
+    </None>
+    <None Include="Relatorios\DatasetParaRelatorios\RA.xsd" />
+    <None Include="Service References\WSCorreios\AtendeClienteService.wsdl" />
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.assuntoPIMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.clienteERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.contratoERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.embalagemLRSMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.enderecoERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.mensagemRetornoPIMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.motivoPIMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.retorno.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.retornoCancelamento.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.servicoAdicionalXML.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.servicoERP.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.statusCartao.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.statusPlp.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WSCorreios\EmatWinFormsNetFramework1402.WSCorreios.valePostal.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="_bd_mat_americanaDataSet.xsc">
+      <DependentUpon>_bd_mat_americanaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_bd_mat_americanaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>_bd_mat_americanaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_bd_mat_americanaDataSet.xss">
+      <DependentUpon>_bd_mat_americanaDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash-2-16.png" />
+    <None Include="Resources\action_add_16xLG.png" />
+    <None Include="Resources\action_Cancel_16xLG.png" />
+    <None Include="Resources\filter_16xLG.png" />
+    <None Include="Resources\globe_16xLG.png" />
+    <None Include="Resources\lock_16xLG.png" />
+    <None Include="Resources\magnifier_16xLG.png" />
+    <None Include="Resources\properties_16xLG.png" />
+    <None Include="Resources\screwdriver_16xLG.png" />
+    <None Include="Resources\ZoomNeutral_16xlG.png" />
+    <None Include="Resources\user_16xLG.png" />
+    <None Include="Resources\Team_16xLG.png" />
+    <None Include="Resources\Symbols_Help_and_inclusive_32xLG.png" />
+    <None Include="Resources\Symbols_Help_and_inclusive_16xLG.png" />
+    <None Include="Resources\StatusAnnotations_Warning_16xLG.png" />
+    <None Include="Resources\StatusAnnotations_Warning_16xLG_color.png" />
+    <None Include="Resources\StatusAnnotations_Blocked_16xLG_color.png" />
+    <None Include="Resources\StatusAnnotations_Blocked_16xLG.png" />
+    <None Include="Resources\StatusAnnotations_Complete_and_ok_16xLG.png" />
+    <None Include="Resources\StatusAnnotations_Complete_and_ok_16xLG_color.png" />
+    <None Include="Resources\StandardRefresh_16xLG.png" />
+    <None Include="Resources\Remove_16xLG.png" />
+    <None Include="Resources\refresh_16xLG.png" />
+    <None Include="Resources\printer_16xLG.png" />
+    <None Include="Resources\process_16xLG.png" />
+    <None Include="Resources\PencilAngled_16xLG_color.png" />
+    <None Include="Resources\PencilAngled_16xLG.png" />
+    <None Include="Resources\AsymmetricKey_10092_32x.png" />
+    <None Include="Resources\AsymmetricKey_10092_16x.png" />
+    <None Include="Resources\gear_16xLG.png" />
+    <None Include="Resources\DraftingTriangle_16xLG.png" />
+    <None Include="Resources\database_16xLG.png" />
+    <None Include="Resources\certificate_16xLG.png" />
+    <None Include="Resources\Camera_16xLG.png" />
+    <None Include="Resources\btcad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Microsoft.ReportViewer.DataVisualization">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Microsoft.ReportViewer.WebForms">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Direita-normall.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Esquerda-invertidaa.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Codigo1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Inner1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InnerBio.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InnerPlus.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nenhum.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TopDataLogo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WSCorreios\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WSCorreios\configuration.svcinfo" />
+    <None Include="Service References\WSCorreios\configuration91.svcinfo" />
+    <None Include="Resources\MapTileLayer_16x.png" />
+    <None Include="Resources\CheckBoxList_727.png" />
+    <None Include="Resources\EditorZone_6025.png" />
+    <None Include="Resources\Delete-64%281%29.png" />
+    <None Include="Resources\AddInheritedControl_372.png" />
+    <None Include="Resources\art.png" />
+    <None Include="Resources\bio.png" />
+    <None Include="Resources\cie.png" />
+    <None Include="Resources\Login_6031_32x.png" />
+    <Content Include="logoEmat.ico" />
+    <Content Include="Images\icone_emat.png" />
+    <None Include="Resources\add.png" />
+    <Content Include="README.txt" />
+    <Content Include="Resources\CodeReviewShowAllComments_3546.png" />
+    <Content Include="Resources\fingerprint.png" />
+    <None Include="Resources\logo_e-mat.png" />
+    <Content Include="Resources\sem_foto.jpg" />
+    <Content Include="Resources\Digital_certo.png" />
+    <Content Include="Resources\Digital_errado.png" />
+    <None Include="Resources\SplashScreen_1.png" />
+    <None Include="Resources\mat.bmp" />
+    <None Include="Resources\soc.png" />
+    <None Include="Resources\por.png" />
+    <None Include="Resources\mat.png" />
+    <None Include="Resources\qui.png" />
+    <None Include="Resources\fis.png" />
+    <None Include="Resources\fil.png" />
+    <None Include="Resources\geo.png" />
+    <None Include="Resources\his.png" />
+    <None Include="Resources\ing.png" />
+    <None Include="Resources\Loop_16xLG.png" />
+    <None Include="Resources\slr_camera_application_slr_3037.png" />
+    <Content Include="Resources\Table_748.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WSCorreios\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Relatorios\Escolas\Americana\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="EMFGENLib">
+      <Guid>{C097B4CF-2CEA-442F-B025-610D2B0C05C8}</Guid>
+      <VersionMajor>13</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="PAGEOBJECTMODELLib">
+      <Guid>{237F4BEC-8AE5-41E1-AE84-B194E4670597}</Guid>
+      <VersionMajor>13</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VLELib">
+      <Guid>{ACF55B94-B31C-4604-912A-314B00C1595D}</Guid>
+      <VersionMajor>13</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CrystalReports.Windows.Forms">
+      <Version>13.0.4001</Version>
+    </PackageReference>
+    <PackageReference Include="EntityFramework">
+      <Version>6.4.4</Version>
+    </PackageReference>
+    <PackageReference Include="log4net">
+      <Version>2.0.14</Version>
+    </PackageReference>
+    <PackageReference Include="morelinq">
+      <Version>3.3.2</Version>
+    </PackageReference>
+    <PackageReference Include="Zen.Barcode.Rendering.Framework">
+      <Version>3.1.10729.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

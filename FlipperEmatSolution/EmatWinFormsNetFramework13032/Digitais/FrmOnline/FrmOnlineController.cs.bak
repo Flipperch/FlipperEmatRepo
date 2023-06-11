@@ -1,0 +1,2069 @@
+//******************************************************************************
+//A Topdata Sistemas de Automação Ltda não se responsabiliza por qualquer
+//tipo de dano que este software possa causar, este exemplo deve ser utilizado
+//apenas para demonstrar a comunicação off-line com os equipamentos da linha
+//inner.
+//
+//Exemplo On-Line
+//Desenvolvido em C#.
+//                                           Topdata Sistemas de Automação Ltda.
+//******************************************************************************
+
+using System;
+using System.IO;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Linq;
+
+//Referencias Nitgen
+using NBioBSPCOMLib;
+using NITGEN.SDK.NBioBSP;
+
+//Referencias Projeto
+using EasyInnerSDK.COM;
+using EasyInnerSDK.Entity;
+using System.Configuration;
+
+//Referencia EasyInner
+namespace EasyInnerSDK.UI
+{     
+    public class FrmOnlineController
+    {
+        //****************************************************************************
+        //****************************************************************************
+        //Configuração Catraca Esquerda ou Direita
+
+        public static bool LiberaEntrada = false;
+        public static bool LiberaSaida = false;
+        public static bool LiberaEntradaInvertida = false;
+        public static bool LiberaSaidaInvertida = false;
+
+        //****************************************************************************
+        //****************************************************************************
+
+        //*******************************************************
+        //*******************************************************
+        //Flag para DEFINIÇÃO TECLADO
+        public static string ultCartao;
+        public static int intTentativas;
+
+        #region Propriedades
+
+        #region UiBIO
+        private static FrmOnline _UiMainOnline;
+        public static FrmOnline UiBIO
+        {
+            get { return _UiMainOnline; }
+            set { _UiMainOnline = value; }
+        }
+        #endregion
+
+        #region UltimoSegundo
+        private static int _ultimoSegundo;
+
+        public static int UltimoSegundo
+        {
+            get { return _ultimoSegundo; }
+            set { _ultimoSegundo = value; }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Métodos Auxiliares
+
+        #region Pausa
+        private static void Pausa(int Tempo)
+        {
+            System.Threading.Thread.Sleep(Tempo);
+            Application.DoEvents();
+        }
+        #endregion
+
+        #region SetarTimeoutBio
+        private static void SetarTimeoutBio()
+        {
+            UiBIO.Timeout = (int)EasyInner.RetornarSegundosSys() + 7;
+        }
+        #endregion
+
+        #region ValidaNumeroUsuario
+        private static bool ValidaNumeroUsuario(ref string NumUsuario)
+        {
+            int saida;
+
+            //Testa se é um Número
+            if (int.TryParse(NumUsuario, out saida))
+            {
+                //Preenche com 0 a esquerda caso não tenha 10 Números
+                while (NumUsuario.Length < 10)
+                {
+                    NumUsuario = "0" + NumUsuario;
+                }
+                return true;
+            }
+            else
+                return false;
+        }
+        #endregion
+
+        #region TratarRetornoErro
+        private static void TratarRetornoErro(int Ret)
+        {
+            switch ((Enumeradores.RetornoBIO)Ret)
+            {
+                case Enumeradores.RetornoBIO.FALHA_NA_COMUNICACAO:
+                    MessageBox.Show("Erro: Falha na comunicação com o Inner BIO.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.PROCESSANDO_ULTIMO_COMANDO:
+                    MessageBox.Show("Atenção: Ainda processando último Comando.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.FALHA_NA_COMUNICACAO_COM_PLACA_BIO:
+                    MessageBox.Show("Erro: Falha na comunicação com a placa BIO.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.INNER_BIO_NAO_ESTA_EM_MODO_MASTER:
+                    MessageBox.Show("Erro: Inner BIO não esta em moddo MASTER.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.USUARIO_JA_CADASTRADO_NO_BANCO_DE_DADOS_INNER_BIO:
+                    MessageBox.Show("Erro: Usuário ja cadastrado no banco de dados do Inner BIO.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.USUARIO_NAO_CADASTRADO_NO_BANCO_DE_DADOS_INNER_BIO:
+                    MessageBox.Show("Erro: Usuário não cadastrado no banco de dados Inner BIO.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.BASE_DE_DADOS_DE_USUARIOS_ESTA_CHEIA:
+                    MessageBox.Show("Erro: Base de dados de Usuários esta cheia.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.ERRO_NO_SEGUNDO_DEDO_DO_USUARIO:
+                    MessageBox.Show("Erro: Erro no segundo dedo do Usuário.", "Erro");
+                    break;
+
+                case Enumeradores.RetornoBIO.SOLICITACAO_PARA_INNER_BIO_INVALIDA:
+                    MessageBox.Show("Erro: Solicitação para Inner BIO Inválida.", "Erro");
+                    break;
+
+                default:
+                    MessageBox.Show("Erro: Mensagem Indefinida", "Erro");
+                    break;
+
+
+            }
+
+            //UiMainOnline.lblEmExec1.Text = "Erro ao executar comando..";
+        }
+
+        #endregion
+
+        #region AdicionarInnerOnline
+        internal static void AdicionarInnerOnline(FrmOnline UiMainOnline)
+        {
+            UiBIO = UiMainOnline;
+
+            //Cria um novo Objeto Inner.
+            Inner objInner = new Inner();
+            objInner.Biometrico = UiMainOnline.ckbBIO.Checked;
+
+            //Incializa o Inner com as opções Selecionadas pelo usuário..
+
+            //catraca
+            if (UiMainOnline.cboEquipamento.SelectedIndex != (byte)Enumeradores.Acionamento.Acionamento_Coletor)
+            {
+                objInner.Catraca = true;
+            }
+            else
+            {
+                objInner.Catraca = false;
+            }
+            
+            objInner.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            objInner.Numero = (int)UiMainOnline.udNumeroInner.Value;
+            objInner.QtdDigitos = (int)UiMainOnline.udQtdDigitosCartao.Value;
+            objInner.Teclado = UiMainOnline.ckbHabilitaTeclado.Checked;
+            objInner.Lista = UiMainOnline.ckbLista.Checked;
+
+            if (UiMainOnline.cboTipoLeitor.SelectedIndex == -1)
+            {
+                MessageBox.Show("Favor selecionar um tipo de leitor !", "Atenção");
+                return;
+            }
+
+            if ((UiMainOnline.cboEquipamento.SelectedIndex == (byte)Enumeradores.Acionamento.Acionamento_Coletor) || ((UiMainOnline.optDireita.Checked) || (UiMainOnline.optEsquerda.Checked)))
+            {
+            }
+            else
+            {
+                MessageBox.Show("Favor informar o lado de instalação da catraca !", "Atenção");
+                return;
+            }
+
+            objInner.PadraoCartao = UiMainOnline.cboTipoLeitor.SelectedIndex;
+            objInner.Identificacao = (byte)(UiMainOnline.ckbIdentificacao.Checked ? Enumeradores.Opcao.SIM : Enumeradores.Opcao.NAO);
+            objInner.Verificacao = (byte)(UiMainOnline.ckbVerificacao.Checked ? Enumeradores.Opcao.SIM : Enumeradores.Opcao.NAO);
+            objInner.DoisLeitores = UiMainOnline.ckbDoisLeitores.Checked;
+
+            //objInner.LinhaInner = 0;
+            objInner.VariacaoInner = 0;
+            //objInner.ModeloBioInner = 0;
+           
+            //Testa se existe algum inner com o mesmo nome na lista da Janela
+            foreach (Inner inner in UiMainOnline.LstInners)
+            {
+                if (inner.Numero == objInner.Numero)
+                {
+                    MessageBox.Show("Número de Inner Já cadastrado em Memória.", "Atenção");
+                    return;
+                }
+            }
+
+            //Adiciona o Inner a memória 
+            UiMainOnline.LstInners.Add(objInner);
+            //MessageBox.Show("Inner adicionado em memória com sucesso.");
+        }
+        #endregion
+
+        #region AtualizaListaInnerOnline
+        internal static void AtualizaListaInnerOnline(FrmOnline UiMainOnline)
+        {
+            //Limpa a lista de Inner em memória..
+            UiMainOnline.lstInnersCadastrados.Items.Clear();
+
+            //Adiciona os inners novamente em memória..
+            foreach (Inner objInner in UiMainOnline.LstInners)
+            {
+                UiMainOnline.lstInnersCadastrados.Items.Add(objInner);
+            }
+        }
+        #endregion
+
+        #region RemoverInnerLista
+        internal static void RemoverInnerLista(FrmOnline UiMainOnline)
+        {
+            UiBIO = UiMainOnline;
+
+            if (UiBIO.lstInnersCadastrados.SelectedItem != null)
+            {
+                foreach (Inner inner in UiBIO.LstInners)
+                {
+                    if (inner.Numero == ((Inner)UiBIO.lstInnersCadastrados.SelectedItem).Numero)
+                    {
+                        UiBIO.LstInners.Remove(inner);
+                        UiBIO.lstInnersCadastrados.Items.Remove(UiBIO.lstInnersCadastrados.SelectedItem);
+                        if (UiMainOnline.lstInnersCadastrados.Items.Count > 0)
+                        {
+                            UiMainOnline.lstInnersCadastrados.SelectedIndex = UiMainOnline.lstInnersCadastrados.Items.Count - 1;
+                        }
+                        MessageBox.Show("Inner removido da memória");
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("É necessário selecionar um Inner para remover da memória");
+            }
+        }
+        #endregion
+
+        #region DefineValoresParaConfigurarLeitores
+        private static void DefineValoresParaConfigurarLeitores(Inner innerAtual)
+        {
+
+            //****************************************************************************
+            //****************************************************************************
+            //Configuração Catraca Esquerda ou Direita
+
+            //define os valores para configurar os leitores de acordo com o tipo de inner
+            if (innerAtual.DoisLeitores) 
+            {
+                if (UiBIO.optDireita.Checked) 
+                {
+                  //Direita Selecionado
+                  innerAtual.ValorLeitor1 = Convert.ToByte(Enumeradores.Operacao.SOMENTE_ENTRADA);
+                  innerAtual.ValorLeitor2 = Convert.ToByte(Enumeradores.Operacao.SOMENTE_SAIDA);
+                }
+                else
+                {
+                  //Esquerda Selecionado
+                  innerAtual.ValorLeitor1 = Convert.ToByte(Enumeradores.Operacao.SOMENTE_SAIDA);
+                  innerAtual.ValorLeitor2 = Convert.ToByte(Enumeradores.Operacao.SOMENTE_ENTRADA);
+                }
+            }
+            else
+            {
+                if (UiBIO.optDireita.Checked)
+                {
+                  //Direita Selecionado
+                  innerAtual.ValorLeitor1 = Convert.ToByte(Enumeradores.Operacao.ENTRADA_E_SAIDA);
+                }
+                else
+                {
+                  //Esquerda Selecionado
+                    innerAtual.ValorLeitor1 = Convert.ToByte(Enumeradores.Operacao.ENTRADA_E_SAIDA_INVERTIDAS);
+                }
+
+                innerAtual.ValorLeitor2 = Convert.ToByte(Enumeradores.Operacao.DESATIVADO);
+            
+            }
+
+            //****************************************************************************
+            //**************************************************************************** 
+            
+        }
+        #endregion
+
+        #region MontaConfiguracaoInner
+
+        private static void MontaConfiguracaoInner(Inner innerAtual, Enumeradores.modoComunicacao modo)
+        {
+
+            // ANTES de realizar a configuração precisa definir o Padrão do cartão 
+            if (UiBIO.cboPadraoCartaoOnline.SelectedIndex == 0)
+            {
+                EasyInner.DefinirPadraoCartao((byte)Enumeradores.PadraoCartao.PADRAO_TOPDATA);
+            }
+            else
+            {
+                EasyInner.DefinirPadraoCartao((byte)Enumeradores.PadraoCartao.PADRAO_LIVRE);
+            }
+            
+            // Modo de comunicação
+            if (modo == Enumeradores.modoComunicacao.MODO_OFF_LINE)
+            {
+                //Configurações para Modo Offline.
+                EasyInner.ConfigurarInnerOffLine();
+            }
+            else
+            {
+                //Configurações para Modo Online.
+                EasyInner.ConfigurarInnerOnLine();
+            }
+
+            //Verificar
+            //Acionamentos 1 e 2
+            switch (UiBIO.cboEquipamento.SelectedIndex)
+            {
+                case (byte)Enumeradores.Acionamento.Acionamento_Coletor:
+                    EasyInner.ConfigurarAcionamento1(0, 0);
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Entrada_E_Saida:
+                    EasyInner.ConfigurarAcionamento1(1, 5);
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Entrada:
+                    EasyInner.ConfigurarAcionamento1(2, 5);
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Saida:
+                    EasyInner.ConfigurarAcionamento1(3, 5);
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Urna:
+                    EasyInner.ConfigurarAcionamento1(1, 5);
+                    EasyInner.ConfigurarAcionamento2(3, 5);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Saida_Liberada:
+                    //Se Esquerda Selecionado - Inverte código
+                    if ((UiBIO.cboEquipamento.SelectedIndex != (byte)Enumeradores.Acionamento.Acionamento_Coletor) && (UiBIO.optEsquerda.Checked))
+                    {
+                        EasyInner.ConfigurarAcionamento1(7, 5);
+                    }
+                    else
+                    {
+                        EasyInner.ConfigurarAcionamento1(6, 5);
+                    }
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Entrada_Liberada:
+                    //Se Esquerda Selecionado - Inverte código
+                    if ((UiBIO.cboEquipamento.SelectedIndex != (byte)Enumeradores.Acionamento.Acionamento_Coletor) && (UiBIO.optEsquerda.Checked))
+                    {
+                        EasyInner.ConfigurarAcionamento1(6, 5);
+                    }
+                    else
+                    {
+                        EasyInner.ConfigurarAcionamento1(7, 5);
+                    }
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Liberada_2_Sentidos:
+                    EasyInner.ConfigurarAcionamento1(8, 5);
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+                case (byte)Enumeradores.Acionamento.Acionamento_Catraca_Sentido_Giro:
+                    EasyInner.ConfigurarAcionamento1(9, 5);
+                    EasyInner.ConfigurarAcionamento2(0, 0);
+                    break;
+            }
+
+            //Configurar tipo do leitor
+            switch (innerAtual.PadraoCartao)
+            {
+                //leitor barras
+                case (byte)Enumeradores.TipoLeitor.CODIGO_DE_BARRAS:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.CODIGO_DE_BARRAS);
+                    EasyInner.DefinirQuantidadeDigitosCartao(Convert.ToByte(innerAtual.QtdDigitos));
+                    break;
+                //leitor magnético
+                case (byte)Enumeradores.TipoLeitor.MAGNETICO:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.MAGNETICO);
+                    EasyInner.DefinirQuantidadeDigitosCartao(Convert.ToByte(innerAtual.QtdDigitos));
+                    break;
+                //leitor proximidade abatrack
+                case (byte)Enumeradores.TipoLeitor.PROXIMIDADE_ABATRACK2:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.PROXIMIDADE_ABATRACK2);
+                    EasyInner.DefinirQuantidadeDigitosCartao(Convert.ToByte(innerAtual.QtdDigitos));
+                    break;
+                //leitor wiegand - 6 dígitos
+                case (byte)Enumeradores.TipoLeitor.WIEGAND:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.WIEGAND);
+                    EasyInner.DefinirQuantidadeDigitosCartao(6);
+                    break;
+                //leitor smart (abatrack 10 dígitos)
+                case 4:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.PROXIMIDADE_ABATRACK2);
+                    EasyInner.DefinirQuantidadeDigitosCartao(10);
+                    break;
+                //leitor wiegand com facility code - 10 dígitos
+                case 33:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.WIEGAND);
+                    EasyInner.DefinirQuantidadeDigitosCartao(10);
+                    break;
+                //valor inválido - configura como barras
+                default:
+                    EasyInner.ConfigurarTipoLeitor((byte)Enumeradores.TipoLeitor.CODIGO_DE_BARRAS);
+                    EasyInner.DefinirQuantidadeDigitosCartao(Convert.ToByte(innerAtual.QtdDigitos));
+                    break;
+            }
+
+            //Habilitar teclado
+            EasyInner.HabilitarTeclado((byte)(innerAtual.Teclado ? Enumeradores.Opcao.SIM : Enumeradores.Opcao.NAO), 0);
+
+            // define os valores para configurar os leitores de acordo com o tipo de inner
+            DefineValoresParaConfigurarLeitores(innerAtual);
+            EasyInner.ConfigurarLeitor1(innerAtual.ValorLeitor1);
+            EasyInner.ConfigurarLeitor2(innerAtual.ValorLeitor2);
+
+            //Box = Configura equipamentos com dois leitores
+            if (innerAtual.DoisLeitores)
+            {
+                // exibe mensagens do segundo leitor
+                EasyInner.ConfigurarWiegandDoisLeitores(0, (byte)Enumeradores.Opcao.SIM);
+            }
+
+            // Registra acesso negado
+            EasyInner.RegistrarAcessoNegado(1);
+
+            //Define função default para não precisar selecionar o evento por tecla
+            if ((UiBIO.cboEquipamento.SelectedIndex == (byte)Enumeradores.Acionamento.Acionamento_Catraca_Entrada_E_Saida) || (UiBIO.cboEquipamento.SelectedIndex == (byte)Enumeradores.Acionamento.Acionamento_Catraca_Liberada_2_Sentidos) || (UiBIO.cboEquipamento.SelectedIndex == (byte)Enumeradores.Acionamento.Acionamento_Catraca_Sentido_Giro))
+            {
+                EasyInner.DefinirFuncaoDefaultLeitoresProximidade(12); // 12 – Libera a catraca nos dois sentidos e registra o bilhete conforme o sentido giro.
+            }
+            else
+            {
+                if ((UiBIO.cboEquipamento.SelectedIndex == (byte)Enumeradores.Acionamento.Acionamento_Catraca_Entrada) || (UiBIO.cboEquipamento.SelectedIndex == (byte)Enumeradores.Acionamento.Acionamento_Catraca_Saida_Liberada))
+                {
+                    if (UiBIO.optDireita.Checked)
+                    {
+                        EasyInner.DefinirFuncaoDefaultLeitoresProximidade(10);  // 10 – Registrar sempre como entrada.
+                    }
+                    else
+                    {
+                        EasyInner.DefinirFuncaoDefaultLeitoresProximidade(11);  // Inverte o sentido de entrada.
+                    }
+
+                }
+                else
+                {
+                    if (UiBIO.optDireita.Checked)
+                    {
+                        EasyInner.DefinirFuncaoDefaultLeitoresProximidade(11);  // 10 – Registrar sempre como entrada.
+                    }
+                    else
+                    {
+                        EasyInner.DefinirFuncaoDefaultLeitoresProximidade(10);  // Inverte o sentido de entrada.
+                    }
+                }
+            }
+
+            if (innerAtual.Biometrico)
+            {
+                EasyInner.DefinirFuncaoDefaultSensorBiometria(10);
+            }
+            else
+            {
+                EasyInner.DefinirFuncaoDefaultSensorBiometria(0);
+            }
+
+            if (innerAtual.QtdDigitos <= 14)
+            {
+                //Configura para receber o horario dos dados qdo Online.
+                EasyInner.ReceberDataHoraDadosOnLine(Convert.ToByte(Enumeradores.Opcao.SIM));
+            }
+        }
+
+        #endregion
+
+        #region InverterString
+        private static string InverterString(string str) 
+        { 
+            int tamanho = str.Length; 
+            char[] caracteres = new char[tamanho]; 
+            
+            for (int i = 0; i < tamanho; i++) 
+            { 
+                caracteres[i] = str[tamanho - 1 - i]; 
+            } 
+
+            return new string(caracteres);
+        }
+        #endregion
+
+        #region BinarioParaDecimal
+        private static int BinarioParaDecimal(string valorBinario)
+        {
+            int expoente = 0;
+            int numero; 
+            int soma = 0;
+            string numeroInvertido = InverterString(valorBinario);
+
+            for(int i = 0; i < numeroInvertido.Length; i++)
+            {
+                //pega dígito por dígito do número digitado
+                numero = Convert.ToInt32(numeroInvertido.Substring(i,1)); 
+                //multiplica o dígito por 2 elevado ao expoente, e armazena o resultado em soma
+                soma += numero * (int)Math.Pow(2,expoente);
+                // incrementa          
+                expoente++;
+            }
+            return soma;
+        }
+        #endregion
+
+        #region ConfiguraEntradasMudancaOnLine
+
+        private static int ConfiguraEntradasMudancaOnLine(Inner InnerAtual)
+        {
+            string Configuracao;
+
+            //Habilita Teclado
+            Configuracao = (InnerAtual.Teclado ? 1 : 0).ToString();
+
+            if (!InnerAtual.Biometrico)
+            {
+                //Dois leitores
+                if (InnerAtual.DoisLeitores)
+                    Configuracao = "010" + //Leitor 2 só saida
+                                   "001" + //Leitor 1 só entrada
+                                   Configuracao;
+                else //Apenas um leitores
+                    Configuracao = "000" + //Leitor 2 Desativado
+                                   "011" + //Leitor 1 configurado para Entrada e Saída
+                                   Configuracao;
+
+                Configuracao = "1" + // Habilitado
+                               Configuracao;
+            }
+            else //Com Biometria 
+            {
+                Configuracao = "0" + //Bit Fixo
+                               "1" + //Habilitado
+                               InnerAtual.Identificacao + //Identificação
+                               InnerAtual.Verificacao + //Verificação
+                               "0" + //Bit fixo 
+                               (InnerAtual.DoisLeitores ? "11" : "10") + // 11 -> habilita leitor 1 e 2, 10 -> habilita apenas leitor 1
+                               Configuracao;
+            }
+
+            //Converte Binário para Decimal
+            return BinarioParaDecimal(Configuracao);
+
+        }
+        #endregion
+
+        #region DefineVersao
+        private static void DefineVersao(Inner InnerAtual, FrmOnline UiMainOnline)
+        {
+              byte Linha = 0;
+              short Variacao = 0;
+              byte VersaoAlta  = 0;
+              byte VersaoBaixa = 0;
+              byte VersaoSufixo = 0;
+              int Modelo = 0;
+              int VersaoAltaBio = 0;
+              int VersaoBaixaBio = 0;
+              //Envia Comando e Atualiza Lista de mensagens..
+              int Ret = EasyInner.ReceberVersaoFirmware(InnerAtual.Numero, ref Linha,  ref Variacao, ref VersaoAlta, ref VersaoBaixa, ref VersaoSufixo);
+
+              if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+              {
+
+                    switch (Linha)
+                    {
+                        case 1:
+                            InnerAtual.LinhaInner = "Inner Plus";
+                            break;
+
+                        case 2:
+                            InnerAtual.LinhaInner = "Inner Disk";
+                            break;
+
+                        case 3:
+                            InnerAtual.LinhaInner = "Inner Verid";
+                            break;
+
+                        case 6:
+                            InnerAtual.LinhaInner = "Inner Bio";
+                            break;
+
+                        case 7:
+                            InnerAtual.LinhaInner = "Inner NET";
+                            break;
+                    }
+
+                  InnerAtual.VariacaoInner = Variacao;
+                  InnerAtual.VersaoInner = VersaoAlta.ToString() + '.' + VersaoBaixa + '.' + VersaoSufixo;
+
+                  if (InnerAtual.Biometrico)
+                  {
+
+                      Ret = EasyInner.SolicitarModeloBio(InnerAtual.Numero);
+
+                      do
+                      {
+                          Thread.Sleep(1);
+                          Ret = EasyInner.ReceberModeloBio(InnerAtual.Numero, 0, ref Modelo);
+                      }
+                      while (Ret == 128);
+
+
+                      switch (Modelo)
+                      {
+                            case 1:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: Light 100 usuários FIM10";
+                                break;
+                            case 4:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: 1000/4000 usuários FIM01";
+                                break;
+                            case 51:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: 1000/4000 usuários FIM2030";
+                                break;
+                            case 52:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: 1000/4000 usuários FIM2040";
+                                break;
+                            case 48:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: Light 100 usuários FIM3030";
+                                break;
+                            case 64:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: Light 100 usuários FIM3040";
+                                break;
+                            case 80:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: 1000/4000 usuários FIM5060";
+                                break;
+                            case 82:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: 1000/4000 usuários FIM5260";
+                                break;
+                            case 83:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: Light 100 usuários FIM5360";
+                                break;
+                            case 255:
+                                InnerAtual.ModeloBioInner = "Modelo do bio: Desconhecido";
+                                break;
+                      }
+
+                      Ret = EasyInner.SolicitarVersaoBio(InnerAtual.Numero);
+
+                      do
+                      {
+                          Thread.Sleep(1);
+                          Ret = EasyInner.ReceberVersaoBio(InnerAtual.Numero, 0, ref VersaoAltaBio, ref VersaoBaixaBio);
+                      }
+                      while (Ret == 128);
+                  }
+                  InnerAtual.VersaoBio = VersaoAltaBio + "." + VersaoBaixaBio;
+              }
+
+            FrmOnlineController.AtualizaListaInnerOnline(UiMainOnline);
+        }
+        #endregion
+
+        #region MontarHorarios
+        private static void MontarHorarios(Inner InnerAtual)
+        {
+            EasyInner.ApagarHorariosAcesso(InnerAtual.Numero);
+            //Monta a tabela de horarios numero 1
+
+            //Insere no buffer da DLL horario de acesso
+            //(Segunda - dia da semana = 1)
+            EasyInner.InserirHorarioAcesso(1, 1, 1, 8, 0); //(1 - nº da tabela horario, 1 - dia da semana, 1 - faixa de horario, 8 - hora, 0 - minuto)
+            EasyInner.InserirHorarioAcesso(1, 1, 2, 12, 0);
+            EasyInner.InserirHorarioAcesso(1, 1, 3, 13, 0);
+            EasyInner.InserirHorarioAcesso(1, 1, 4, 18, 0);
+
+            //(Terça - dia da semana = 2)
+            EasyInner.InserirHorarioAcesso(1, 2, 1, 8, 0);
+            EasyInner.InserirHorarioAcesso(1, 2, 2, 12, 0);
+            EasyInner.InserirHorarioAcesso(1, 2, 3, 13, 0);
+            EasyInner.InserirHorarioAcesso(1, 2, 4, 18, 0);
+
+            //(Quarta - dia da semana = 3)
+            EasyInner.InserirHorarioAcesso(1, 3, 1, 8, 0);
+            EasyInner.InserirHorarioAcesso(1, 3, 2, 12, 0);
+            EasyInner.InserirHorarioAcesso(1, 3, 3, 13, 0);
+            EasyInner.InserirHorarioAcesso(1, 3, 4, 18, 0);
+
+            //(Quinta - dia da semana = 4)
+            EasyInner.InserirHorarioAcesso(1, 4, 1, 8, 0);
+            EasyInner.InserirHorarioAcesso(1, 4, 2, 12, 0);
+            EasyInner.InserirHorarioAcesso(1, 4, 3, 13, 0);
+            EasyInner.InserirHorarioAcesso(1, 4, 4, 18, 0);
+
+            //(Sexta - dia da semana = 5
+            EasyInner.InserirHorarioAcesso(1, 5, 1, 8, 0);
+            EasyInner.InserirHorarioAcesso(1, 5, 2, 12, 0);
+            EasyInner.InserirHorarioAcesso(1, 5, 3, 13, 0);
+            EasyInner.InserirHorarioAcesso(1, 5, 4, 18, 0);
+
+            //(Sabado - dia da semana = 6)
+            //(Domingo/Feriado - dia da semana = 7)
+            EasyInner.EnviarHorariosAcesso(InnerAtual.Numero);
+
+        }
+        #endregion
+
+        #region MontarListaTopdata
+        private static void MontarListaTopdata(Inner InnerAtual)
+        {
+            EasyInner.ApagarListaAcesso(InnerAtual.Numero);
+
+            //Insere usuario da lista no buffer da DLL
+            EasyInner.InserirUsuarioListaAcesso("100", 1);
+            EasyInner.InserirUsuarioListaAcesso("1", 101);
+            EasyInner.InserirUsuarioListaAcesso("2", 102);
+
+            EasyInner.EnviarListaAcesso(InnerAtual.Numero);
+        }
+        #endregion
+        
+        #region MontarListaLivre
+        private static void MontarListaLivre(Inner InnerAtual)
+        {
+            EasyInner.ApagarListaAcesso(InnerAtual.Numero);
+
+            //Insere usuario da lista no buffer da DLL
+            EasyInner.InserirUsuarioListaAcesso("1", 1); //(1 - depende do padrao do cartao, 1 - nº do horario ja cadastrado)
+            EasyInner.InserirUsuarioListaAcesso("2", 1);
+            EasyInner.InserirUsuarioListaAcesso("3", 1);
+            EasyInner.InserirUsuarioListaAcesso("100", 1);
+            EasyInner.InserirUsuarioListaAcesso("100001", 1);
+            EasyInner.InserirUsuarioListaAcesso("99999999999999", 101);
+            EasyInner.InserirUsuarioListaAcesso("1234", 102);
+            EasyInner.InserirUsuarioListaAcesso("1000", 101);
+            EasyInner.InserirUsuarioListaAcesso("666", 101);
+            EasyInner.InserirUsuarioListaAcesso("999", 101);
+            EasyInner.InserirUsuarioListaAcesso("00000000000011", 102);
+            
+            EasyInner.EnviarListaAcesso(InnerAtual.Numero);
+        }
+        #endregion
+
+        #region MontarBufferListaSemDigital
+        private static void MontarBufferListaSemDigital(Inner InnerAtual)
+        {
+            EasyInner.IncluirUsuarioSemDigitalBio("999");
+            EasyInner.IncluirUsuarioSemDigitalBio("1000");
+            EasyInner.IncluirUsuarioSemDigitalBio("1");
+            EasyInner.IncluirUsuarioSemDigitalBio("666");
+        }
+        #endregion
+
+        #endregion
+
+        #region Maquina de Estados
+
+        #region MaquinaOnline
+        private static void MaquinaOnline(FrmOnline UiMainOnline)
+        {
+            try
+            {
+                //Inicializa Variáveis
+                UiBIO = UiMainOnline;
+                int Ret2 = -1;
+
+                //Testa se existe Inners em memória para ativar a maquina de estados..
+                if (UiMainOnline.LstInners.Count < 1)
+                {
+                    MessageBox.Show("Não existem Inners Cadastrados em memória.", "Atenção");                    
+                    UiMainOnline.btnAdicionarUsuarioInnerOnline.Enabled = true;
+                    UiMainOnline.btnRemoverInnerLista.Enabled = true;
+                    return;
+                }
+
+                //Dewfine o tipo de conexão conforme selecionado em Combo (padrão Porta Fixa)
+                EasyInner.DefinirTipoConexao((byte)UiBIO.cboTipoConexaoOnline.SelectedIndex);
+
+                //Fecha as conexões caso esteja aberta..
+                EasyInner.FecharPortaComunicacao();
+
+                //Abre a porta de comunicação com o Inner..
+                Ret2 = EasyInner.AbrirPortaComunicacao(System.Convert.ToInt32(UiBIO.txtPortaOnline.Text));
+
+                var query = from r in UiMainOnline.LstInners
+                            where r.Biometrico == true
+                            //orderby r.EstadoAtual descending
+                            select r;
+
+                //Tenta realizar a conexão com o Inner, caso tenha sucesso envia configurações..
+                if (Ret2 == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //Enquanto a variável Estiver Selecionada para prosseguir a maquina, executa o processo..
+                    while (UiMainOnline.Ativa)
+                    {
+                        //Para cada inner da Lista de Inners cadastrados na UI.
+
+                        foreach (Inner InnerAtual in UiMainOnline.LstInners)
+                        {
+
+                            //Verifica o Estado do Inner Atual..
+                            switch (InnerAtual.EstadoAtual)
+                            {
+                                case Enumeradores.EstadosInner.ESTADO_CONECTAR:
+                                    PASSO_ESTADO_CONECTAR(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_ENVIAR_CFG_OFFLINE:
+                                    PASSO_ESTADO_ENVIAR_CFG_OFFLINE(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_COLETAR_BILHETES:
+                                    PASSO_ESTADO_COLETAR_BILHETES(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_ENVIAR_CFG_ONLINE:
+                                    PASSO_ESTADO_ENVIAR_CFG_ONLINE(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_ENVIAR_DATA_HORA:
+                                    PASSO_ESTADO_ENVIAR_DATA_HORA(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_ENVIAR_MSG_PADRAO:
+                                    PASSO_ENVIAR_MENSAGEM_PADRAO(InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_CONFIGURAR_ENTRADAS_ONLINE:
+                                    PASSO_ESTADO_CONFIGURAR_ENTRADAS_ONLINE(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_POLLING:
+                                    PASSO_ESTADO_POLLING(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_LIBERAR_CATRACA:
+                                    PASSO_LIBERA_GIRO_CATRACA(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_MONITORA_GIRO_CATRACA:
+                                    PASSO_MONITORA_GIRO_CATRACA(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.PING_ONLINE:
+                                    PASSO_ESTADO_ENVIA_PING_ONLINE(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.ESTADO_RECONECTAR:
+                                    PASSO_ESTADO_RECONECTAR(UiMainOnline, InnerAtual);
+                                    break;
+
+                                case Enumeradores.EstadosInner.AGUARDA_TEMPO_MENSAGEM:
+                                    PASSO_AGUARDA_TEMPO_MENSAGEM(InnerAtual);
+                                    break;
+
+                                //******************************************************
+                                //******************************************************
+                                //ESTADO_DEFINICAO_TECLADO//////////////////////////////
+                                case Enumeradores.EstadosInner.ESTADO_DEFINICAO_TECLADO:
+                                    PASSO_ESTADO_DEFINICAO_TECLADO(UiMainOnline, InnerAtual);
+                                    break;
+                                case Enumeradores.EstadosInner.ESTADO_ENVIA_MSG_URNA:
+                                    PASSO_ESTADO_ENVIA_MSG_URNA(InnerAtual);
+                                    break;
+                                case Enumeradores.EstadosInner.ESTADO_MONITORA_URNA:
+                                    PASSO_ESTADO_MONITORA_URNA(UiMainOnline, InnerAtual);
+                                    break;
+                                
+                                #endregion
+                            }
+                            if (InnerAtual.CntDoEvents++ > 10)
+                            {
+                                InnerAtual.CntDoEvents = 0;
+                                Application.DoEvents();
+                                System.Threading.Thread.Sleep((int)1 / UiMainOnline.LstInners.Count);
+                            }
+
+                        }
+                    }
+                    Thread.EndCriticalRegion();
+                }
+                else
+                {
+                    MessageBox.Show("Erro ao tentar abrir a porta de comunicação.", "Atenção");
+                }
+                //Fecha Porta de Comunicação.
+                UiMainOnline.FechouMaquina = true;
+                EasyInner.FecharPortaComunicacao();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+            }
+        }
+
+        #region Passos Da Maquina de Estados
+
+        #region PASSO_ESTADO_CONECTAR
+        private static void PASSO_ESTADO_CONECTAR(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Conectando...";
+
+                //Caso o Inner esteja Realizando Ping, vai para o passo de Configuração.
+                if (EasyInner.Ping(InnerAtual.Numero) == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    System.DateTime Data;
+                    Data = System.DateTime.Now;
+                    //Testa a conexão, tenta enviar um relógio para o Inner.
+                    int retorno = EasyInner.EnviarRelogio(InnerAtual.Numero,
+                                                                (byte)Data.Day,
+                                                                (byte)Data.Month,
+                                                                System.Convert.ToByte(Data.Year.ToString().Substring(2, 2)),
+                                                                (byte)Data.Hour,
+                                                                (byte)Data.Minute,
+                                                                (byte)Data.Second);
+                    if (retorno == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                    {
+                        //caso consiga o Inner vai para o Passo de Configuração OFFLINE, posteriormente para coleta de Bilhetes.
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_CFG_OFFLINE;
+
+                        UiMainOnline.btnPararMaquina.Enabled = true;
+
+                    }
+                    else
+                    {
+                        //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                        if (InnerAtual.CountTentativasEnvioComando >= 3)
+                        {
+                            InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                        }
+                        InnerAtual.CountTentativasEnvioComando++;
+                    }
+                }
+                else
+                {
+                    System.Threading.Thread.Sleep(100);
+                }
+            }
+            catch (Exception ex)
+            {
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region ESTADO_ENVIAR_CFG_OFFLINE
+        private static void PASSO_ESTADO_ENVIAR_CFG_OFFLINE(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            int ret = 0;
+            try
+            {
+                #region Realiza as configurações Offline do Inner Atual.
+
+                // Preenche os campos de configuração do Inner
+                MontaConfiguracaoInner(InnerAtual, Enumeradores.modoComunicacao.MODO_OFF_LINE);
+                
+                //Mensagem Entrada e Saida Offline Liberado!
+                EasyInner.DefinirMensagemEntradaOffLine(1, "Entrada liberada.");
+                EasyInner.DefinirMensagemSaidaOffLine(1, "Saída liberada.");                
+                EasyInner.DefinirMensagemPadraoOffLine(1, "Modo OffLine");
+                
+                EasyInner.EnviarMensagensOffLine(InnerAtual.Numero);
+
+                // Configura a mudança automática
+                string TipoComunicacao = UiMainOnline.cboTipoConexaoOnline.SelectedItem.ToString();
+                int Posicao = TipoComunicacao.IndexOf("TCP");
+                if (Posicao != -1)
+                {
+                    //Habilita a mudança Offline
+                    EasyInner.HabilitarMudancaOnLineOffLine(2, 10);
+                }
+                else
+                {
+                    //Habilita a mudança Offline
+                    EasyInner.HabilitarMudancaOnLineOffLine(1, 10);
+                }
+
+                //Define Mudanças OnLine               /* Função que configura BIT a BIT, Ver no manual Anexo III */
+                EasyInner.DefinirEntradasMudancaOnLine((byte)ConfiguraEntradasMudancaOnLine(InnerAtual));
+                
+                if (InnerAtual.Biometrico)
+                {
+                    // Configura entradas mudança OffLine com Biometria 
+                    EasyInner.DefinirEntradasMudancaOffLineComBiometria((byte)(InnerAtual.Teclado ? Enumeradores.Opcao.SIM : Enumeradores.Opcao.NAO),
+                                                                        3, 
+                                                                        (byte)(InnerAtual.DoisLeitores ? 3: 0), 
+                                                                        InnerAtual.Verificacao, 
+                                                                        InnerAtual.Identificacao);
+                }
+                else
+                {
+                    // Configura entradas mudança OffLine               
+                    EasyInner.DefinirEntradasMudancaOffLine((byte)(InnerAtual.Teclado ? Enumeradores.Opcao.SIM : Enumeradores.Opcao.NAO),
+                        (byte)(InnerAtual.DoisLeitores ? 1 : 3),
+                        (byte)(InnerAtual.DoisLeitores ? 2 : 0),
+                        0);                    
+                }
+                                    
+                //Define mensagem de Alteração Online Offline.
+                EasyInner.DefinirMensagemPadraoMudancaOffLine(1, " Modo OffLine");
+              
+                //Envia Configs.
+                EasyInner.EnviarConfiguracoesMudancaAutomaticaOnLineOffLine(InnerAtual.Numero);
+
+                if (InnerAtual.Lista)
+                {
+                    MontarHorarios(InnerAtual);
+
+                    if (UiBIO.cboPadraoCartaoOnline.SelectedIndex == 0)
+                    {
+                        MontarListaTopdata(InnerAtual);
+                    }
+                    else
+                    {
+                        MontarListaLivre(InnerAtual);
+                    } 
+                    
+                    EasyInner.DefinirTipoListaAcesso(1);
+                }
+                else
+                {
+                    EasyInner.DefinirTipoListaAcesso(0);
+                }
+
+                if (InnerAtual.ListaBio){
+                    Application.DoEvents();
+                    //Chama rotina que monta o buffer de cartoes que nao irao precisar da digital
+                    MontarBufferListaSemDigital(InnerAtual);
+                    //Envia o buffer com a lista de usuarios sem digital
+                    EasyInner.EnviarListaUsuariosSemDigitalBio(InnerAtual.Numero);
+                }
+
+                // Envia o comando de configuração
+                ret = EasyInner.EnviarConfiguracoes(InnerAtual.Numero);
+                
+		        //Testa o retorno do envio das configurações Off Line
+                if (ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    DefineVersao(InnerAtual, UiMainOnline);
+                    InnerAtual.CountTentativasEnvioComando = 0;
+                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_COLETAR_BILHETES;
+                    //InnerAtual.TempoColeta = (int)EasyInner.RetornarSegundosSys() + 5;
+                    InnerAtual.TempoColeta = (int)System.DateTime.Now.Second + 5;
+                }
+                else
+                {
+		            //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (InnerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    InnerAtual.CountTentativasEnvioComando++;
+                }
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region PASSO_AGUARDA_TEMPO_MENSAGEM
+        private static void PASSO_AGUARDA_TEMPO_MENSAGEM(Inner innerAtual)
+        {
+            try
+            {
+                //Mantém a mensagem do display por 2 segundos.
+                // Após passar os 2 segundos volta para o passo enviar mensagem padrão
+                TimeSpan tempo = DateTime.Now - innerAtual.TempoInicialMensagem;
+                if (tempo.Seconds >= 2)
+                {
+                    innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_MSG_PADRAO;
+                }
+            }
+            catch (Exception ex)
+            {
+                innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region PASSO_ESTADO_COLETAR_BILHETES
+        private static void PASSO_ESTADO_COLETAR_BILHETES(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe no rodapé da janela o estado da maquina.
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Coletando Bilhetes...";
+
+                //Declaração de Variáveis...
+
+                StringBuilder Cartao = new StringBuilder();
+                byte Dia = 0;
+                byte Mes = 0;
+                byte Ano = 0;
+                byte Hora = 0;
+                byte Minuto = 0;
+                string strCartao = string.Empty;
+                int Ret = -1;
+                int Count = 0;
+                byte Tipo = 0;
+                int tamCartao = 0;
+
+                Thread.BeginCriticalRegion();
+                //Envia o Comando Receber Dados Online..
+
+                //Zera a contagem de Ping Online.
+                InnerAtual.CntDoEvents = 0;
+                InnerAtual.CountPingFail = 0;
+                InnerAtual.CountRepeatPingOnline = 0;                
+
+                //Envia o Comando de Coleta de Bilhetes..
+                Ret = EasyInner.ColetarBilhete(InnerAtual.Numero, ref Tipo, ref Dia, ref Mes, ref Ano, ref Hora, ref Minuto, Cartao);
+
+                //Caso exista bilhete a coletar..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    strCartao = "";
+
+                    InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+
+                    // ANTES de realizar a configuração precisa definir o Padrão do cartão 
+                    if (UiBIO.cboPadraoCartaoOnline.SelectedIndex == 0)
+                    {
+                        tamCartao = Cartao.Length;
+                    }
+                    else
+                    {
+                        tamCartao = Cartao.Length - 1;
+                    }
+                    
+                    //Atribui o nro do Cartão..
+                    for (Count = 0; Count < tamCartao; Count++)
+                    {
+                        strCartao += System.Convert.ToString(System.Convert.ToChar(Cartao[Count]));
+                    }
+
+                    //Adiciona a lista de bilhetes o Nro bilhete coletado..
+                    UiMainOnline.lstBilhetes.Items.Add("Marcações Offline. Inner:" +
+                        InnerAtual.Numero + "  Tipo:" + 
+                        Tipo + "  Cartão:" +
+                        strCartao + "  Data:" +
+                        Dia.ToString("00") + "/" +
+                        Mes.ToString("00") + "/" +
+                        Ano + "  Hora:" +
+                        Hora.ToString("00") + ":" +
+                        Minuto.ToString("00"));
+
+                    //Aumenta o tempo de coleta para +15s..
+                    //InnerAtual.TempoColeta = (int)EasyInner.RetornarSegundosSys() + 5;
+                    InnerAtual.TempoColeta = (int)System.DateTime.Now.Second + 5;
+                    InnerAtual.CountPingFail = 0;
+                }
+                else
+                {
+                    if ((int)System.DateTime.Now.Second >= (InnerAtual.TempoColeta % 60))
+                    {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_CFG_ONLINE;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region PASSO_ESTADO_ENVIAR_CFG_ONLINE
+        private static void PASSO_ESTADO_ENVIAR_CFG_ONLINE(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                #region Realiza as configurações Online do Inner atual.
+                Thread.BeginCriticalRegion();
+
+                MontaConfiguracaoInner(InnerAtual, Enumeradores.modoComunicacao.MODO_ON_LINE);
+
+                //Envia as configurações ao Inner Atual.
+                int ret = EasyInner.EnviarConfiguracoes(InnerAtual.Numero);
+                if (ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //caso consiga enviar as configurações, passa para o passo Enviar Data Hora
+                    InnerAtual.CountTentativasEnvioComando = 0;
+                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_DATA_HORA;
+                    Thread.EndCriticalRegion();
+                }
+                else
+                {
+                    //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (InnerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    InnerAtual.CountTentativasEnvioComando++;
+                }
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+
+        }
+        #endregion
+
+        #region ESTADO_ENVIAR_DATA_HORA
+        private static void PASSO_ESTADO_ENVIAR_DATA_HORA(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Enviando data e hora...";
+
+                //Declaração de Variáveis..
+                int Ret = -1;
+                System.DateTime Data;
+                Data = System.DateTime.Now;
+
+                //Envia Comando de Relógio ao Inner Atual..
+                Ret = EasyInner.EnviarRelogio(
+                    InnerAtual.Numero,
+                    (byte)Data.Day,
+                    (byte)Data.Month,
+                    System.Convert.ToByte(Data.Year.ToString().Substring(2, 2)),
+                    (byte)Data.Hour,
+                    (byte)Data.Minute,
+                    (byte)Data.Second);
+
+                //Testa o Retorno do comando de Envio de Relógio..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //Vai para o passo de Envio de Msg Padrão..
+                    InnerAtual.CountTentativasEnvioComando = 0;
+                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_MSG_PADRAO;
+                }
+                else
+                {
+                    //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (InnerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    InnerAtual.CountTentativasEnvioComando++;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region PASSO_ESTADO_CONFIGURAR_ENTRADAS_ONLINE
+        private static void PASSO_ESTADO_CONFIGURAR_ENTRADAS_ONLINE(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Configurando Entradas Online...";
+
+                //Declaração de variáveis..
+                int Ret = -1;
+
+                //Converte Binário para Decimal
+                int ValorDecimal = ConfiguraEntradasMudancaOnLine(InnerAtual); //Ver no manual Anexo III
+
+                Ret = EasyInner.EnviarFormasEntradasOnLine(InnerAtual.Numero,      //Numero do Inner..
+                                                           (byte)InnerAtual.QtdDigitos,  //Qtd Digitos Teclado..
+                                                           1,                      //Eco do Teclado no Display..
+                                                           (byte)ValorDecimal,     //Valor decimal resultante da conversão Binário para Decimal
+                                                           15,                     //Tempo teclado..
+                                                           17);                    //Posição do Cursor no Teclado..
+
+ 
+                //Testa o retorno do comando..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //Vai para o Estado De Polling.
+                    InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+                    InnerAtual.CountTentativasEnvioComando = 0;
+                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_POLLING;
+
+                    if (InnerAtual.Catraca)
+                    {
+                        UiMainOnline.cmdEntrada.Enabled = true;
+                        UiMainOnline.cmdSair.Enabled = true;
+                    }
+                }
+                else
+                {
+                    //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (InnerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    InnerAtual.CountTentativasEnvioComando++;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        
+        
+        //MÉTODOS AUXILIARES////////////////////////////////////////////////////////////
+        //Verifica se a quantidade maxima de tentativas de um envio de comando
+        //Ocorreu, caso tenha ocorrido retorna TRUE, senão FALSE..
+        #region MaximoNumeroTentativas
+        private static Boolean MaximoNumeroTentativas()
+        {
+           //Incrementa o número de tentativas..
+           intTentativas = intTentativas + 1;
+
+           //Verifica se o número de tentativas é maior do que 3..
+           //MAXIMO_TENTATIVAS_COMUNICACAO
+           if (intTentativas > 3)
+           {
+             return true; //Retorna TRUE
+           } else { 
+             return false; //Retorna FALSE
+           }
+        }
+        #endregion
+
+        //******************************************************************************
+        //******************************************************************************
+        //Este estado configura a mensagem padrão que será exibida no dispositivo em seu
+        //funcionamento Online utilizando o método EnviarMensagemPadraoOnline.
+        //O passo posterior a este estado é o passo de configuração de entradas online,
+        //ou em caso de erro pode retornar para o estado de conexão após alcançar o
+        //número máximo de tentativas.
+        //******************************************************************************
+        #region PASSO_ESTADO_DEFINICAO_TECLADO
+        private static void PASSO_ESTADO_DEFINICAO_TECLADO(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+           int Ret = -1;
+            
+           //Envia mensagem Padrão Online..
+           Ret = EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "ENTRADA OU SAIDA?");
+           Ret = EasyInner.EnviarFormasEntradasOnLine(InnerAtual.Numero,
+                        0, //Quantidade de Digitos do Teclado.. (Não aceita digitação numérica)
+                        0, //0 – não ecoa
+                        (int)Enumeradores.EnviarFormasEntradasOnLine.EntradasON_TECLADO_E_LEITOR1_E_LEITOR2,
+                        10, // Tempo de entrada do Teclado (10s).
+                        32);//Posição do Cursor (32 fica fora..)
+
+           //Se Retorno OK, vai para proximo estado..
+           if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+           {
+             intTentativas = 0;
+             InnerAtual.EstadoTeclado = Enumeradores.EstadosTeclado.AGUARDANDO_TECLADO;
+             InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_POLLING;
+           }
+           else
+           {
+             //Caso o retorno não for OK, tenta novamente até 3x..
+             if (MaximoNumeroTentativas() == true)
+             {
+                 InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+             }
+           }
+        }
+        #endregion
+
+
+        #region HABILITA_LADO_CATRACA
+        public static void HABILITA_LADO_CATRACA(FrmOnline UiMainOnline, string lado)
+        {
+            if (lado == "Entrada")
+            {
+             //entrada
+             if (UiMainOnline.optDireita.Checked) 
+             {
+               LiberaEntrada = true;
+               LiberaEntradaInvertida = false;
+             }
+             else
+             {
+               LiberaEntradaInvertida = true;
+               LiberaEntrada = false;
+             }
+            }
+            
+            if (lado == "Saida") 
+            {
+             //saída
+             if (UiMainOnline.optDireita.Checked) 
+             {
+               LiberaSaida = true;
+               LiberaSaidaInvertida = false;
+             }
+             else
+             {
+               LiberaSaidaInvertida = true;
+               LiberaSaida = false;
+             }
+            }
+        }
+        #endregion
+
+        #region PASSO_ESTADO_POLLING
+        private static void PASSO_ESTADO_POLLING(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Estado de Polling...";
+
+                //Declaração de Variáveis..
+                byte Origem = 0;
+                byte Complemento = 0;
+                StringBuilder Cartao = new StringBuilder();
+                byte Dia = 0;
+                byte Mes = 0;
+                byte Ano = 0;
+                byte Hora = 0;
+                byte Minuto = 0;
+                byte Segundo = 0;
+                string strCartao = string.Empty;
+                int Ret = -1;
+                int Count = 0;
+                string NumCartao = string.Empty;
+
+                Thread.BeginCriticalRegion();
+                //Envia o Comando Receber Dados Online..
+                Ret = EasyInner.ReceberDadosOnLine(InnerAtual.Numero,
+                    ref Origem, ref Complemento, Cartao, ref Dia, ref Mes, ref Ano, ref Hora,
+                    ref Minuto, ref Segundo);
+
+                //Atribui Temporizador
+                InnerAtual.Temporizador = DateTime.Now;
+
+                //Testa o Retorno do Comando..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+
+                    //Teste se a origem é Fim de Acionamento, Função, Anula ou Giro de Catraca..
+                    //Caso seja alguma destas origens, retorna para a maquina de estados.
+                    if (Complemento == (int)Enumeradores.Origem.FIM_TEMPO_ACIONAMENTO
+                        || Complemento == (int)Enumeradores.Origem.GIRO_DA_CATRACA_TOPDATA
+                        || Complemento == (int)Enumeradores.Origem.TECLA_FUNCAO
+                        || Complemento == (int)Enumeradores.Origem.TECLA_ANULA
+                        || ((Cartao.Length == 0) && !(InnerAtual.EstadoTeclado == Enumeradores.EstadosTeclado.AGUARDANDO_TECLADO)))                   
+                    {
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_MSG_PADRAO;
+                        return;
+                    }
+
+                    //Validar os dados aqui
+                    strCartao = "";
+                    
+                    for (Count = 0; Count < Cartao.Length; Count++)
+                    {
+                        strCartao += System.Convert.ToString(System.Convert.ToChar(Cartao[Count]));
+                    }
+
+                    //Se o cartão padrão for topdata, configura os dígitos do cartão como padrão topdata
+                    NumCartao = "";
+                    if (UiBIO.cboPadraoCartaoOnline.SelectedIndex == 0)
+                    {
+                        //Padrão Topdata --> Cartão Topdata deve ter sempre 14 dígitos.
+                        //5 dígitos
+                        NumCartao = strCartao.ToString().Substring(13,1);
+                        NumCartao = NumCartao + strCartao.ToString().Substring(4,4);                        
+                    }
+                    else
+                    {
+                        //Padrão Livre
+                        NumCartao = strCartao;
+                    }
+
+                    UiMainOnline.lstBilhetes.Items.Add("Marcações Online. Inner:" +
+                        InnerAtual.Numero.ToString() +
+                        "  Origem:" + Origem.ToString() +
+                        "  Complemento:" + Complemento.ToString() +
+                        "  Cartão:" + NumCartao + 
+                        "  Data:" + Dia.ToString("00") + "/" +
+                        Mes.ToString("00") + "/" +
+                        Ano.ToString() + 
+                        "  Hora:" + Hora.ToString("00") + ":" +
+                        Minuto.ToString("00") + ":" +
+                        Segundo.ToString("00"));
+
+                    //************************************************************
+                    //************************************************************
+                    //Se a opção catraca foi selecionada
+                    //Se o leitor é de proximidade
+
+                    // Type enumEstadosTeclado = (
+                    //TECLADO_EM_BRANCO,
+                    //AGUARDANDO_TECLADO
+                    //); 
+
+                    if ((UiMainOnline.cboEquipamento.SelectedIndex != (byte)Enumeradores.Acionamento.Acionamento_Coletor)&& (UiMainOnline.ckbDoisLeitores.Checked==false) && ((UiMainOnline.cboTipoLeitor.SelectedIndex == 2) || (UiMainOnline.cboTipoLeitor.SelectedIndex == 3) || (UiMainOnline.cboTipoLeitor.SelectedIndex == 4)))
+                    {
+                      if (InnerAtual.EstadoTeclado == Enumeradores.EstadosTeclado.TECLADO_EM_BRANCO) 
+                      {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_DEFINICAO_TECLADO;
+                      }
+                      else
+                      {
+                        if (InnerAtual.EstadoTeclado == Enumeradores.EstadosTeclado.AGUARDANDO_TECLADO)
+                        {
+                            EasyInner.AcionarBipCurto(InnerAtual.Numero);
+                            
+                            //****************************************************
+                            //Entrada ou saída liberada tratar mensagem
+                            //66 - "Entrada" via teclado
+                            //67 - "Saída" via teclado
+                            if (Convert.ToInt16(Complemento.ToString()) == (int)Enumeradores.Origem.TECLA_ENTRADA) //entrada
+                            {
+                                HABILITA_LADO_CATRACA(UiMainOnline,"Entrada");
+                            } 
+                            else
+                            {
+                                if (Convert.ToInt16(Complemento.ToString()) == (int)Enumeradores.Origem.TECLA_SAIDA)   //saída
+                              {
+                                  HABILITA_LADO_CATRACA(UiMainOnline,"Saida");
+                              }
+                            }
+
+                            InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_LIBERAR_CATRACA;
+
+                            InnerAtual.EstadoTeclado = Enumeradores.EstadosTeclado.TECLADO_EM_BRANCO;
+                        }
+                      }
+                    }
+                    else  //******************************************************
+                    {
+                        if (InnerAtual.Catraca)
+                        {
+                            if ((UiMainOnline.cboEquipamento.SelectedIndex == (int)Enumeradores.Acionamento.Acionamento_Catraca_Urna)&&(Origem ==(int) Enumeradores.Origem.VIA_LEITOR2))
+                            {
+                                
+                                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIA_MSG_URNA;
+                                
+                            }
+                            else
+                            {
+                                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_LIBERAR_CATRACA;
+                            }
+                        }
+                        else
+                        {
+                            //Aciona Bip Curto..
+                            EasyInner.AcionarBipCurto(InnerAtual.Numero);                        
+                            //Desliga Led Verde
+                            EasyInner.LigarBackLite(InnerAtual.Numero);
+                            InnerAtual.TempoInicialMensagem = DateTime.Now;
+                            InnerAtual.CountTentativasEnvioComando = 0;
+                            InnerAtual.EstadoAtual = Enumeradores.EstadosInner.AGUARDA_TEMPO_MENSAGEM;
+
+                        }
+                        EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "Acesso Liberado!");
+                   }
+                }
+                else
+                {
+
+                    //Se passar 3 segundos sem receber nada, passa para o estado enviar ping on line, para manter o equipamento em on line.
+
+                    TimeSpan tempo = DateTime.Now - InnerAtual.TempoInicialPingOnLine;
+                    if (tempo.Seconds >= 3)
+                    {
+                        InnerAtual.EstadoSolicitacaoPingOnLine = InnerAtual.EstadoAtual;
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.PING_ONLINE;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region PASSO_ENVIAR_MENSAGEM_PADRAO
+        /// <summary>
+        /// Envia ao Inner atual, a Mensagem Online Padrão.
+        /// </summary>
+        /// <param name="innerAtual">Inner atual da maquina de estados.</param>
+        private static void PASSO_ENVIAR_MENSAGEM_PADRAO(Inner innerAtual)
+        {
+            try
+            {
+
+                //Testa o Retorno do comando de Envio de Mensagem Padrão On Line
+                if (EasyInner.EnviarMensagemPadraoOnLine(innerAtual.Numero, 1, "Modo Online") == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    innerAtual.CountTentativasEnvioComando = 0;
+                    innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONFIGURAR_ENTRADAS_ONLINE;
+                }
+                else
+                {
+                    //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (innerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    innerAtual.CountTentativasEnvioComando++;
+                }
+            }
+            catch (Exception ex)
+            {
+                innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region PASSO_ENVIAR_MSG_URNA
+        /// <summary>
+        /// Envia ao Inner atual, a Mensagem para recolher o cartão.
+        /// </summary>
+        /// <param name="innerAtual">Inner atual da maquina de estados.</param>
+        private static void PASSO_ESTADO_ENVIA_MSG_URNA(Inner innerAtual)
+        {
+            try
+            {
+
+                //Testa o Retorno do comando de Envio de Mensagem Padrão On Line
+                if (EasyInner.EnviarMensagemPadraoOnLine(innerAtual.Numero, 0, " DEPOSITE O       CARTAO") == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    EasyInner.AcionarRele2(innerAtual.Numero);
+                    innerAtual.CountTentativasEnvioComando = 0;
+                    innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_MONITORA_URNA;
+                }
+                else
+                {
+                    //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (innerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    innerAtual.CountTentativasEnvioComando++;
+                }
+            }
+            catch (Exception ex)
+            {
+                innerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region ESTADO_LIBERA_GIRO_CATRACA
+        private static void PASSO_LIBERA_GIRO_CATRACA(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Libera Giro da Catraca...";
+
+                //Declaraçaõ de Variáveis..
+                int Ret = -1;
+
+                //****************************************************************************
+                //****************************************************************************
+                //Configuração Catraca Esquerda ou Direita
+
+                //Envia comando de liberar a catraca para Entrada.
+                if (LiberaEntrada)
+                {
+                    EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "                ENTRADA LIBERADA");
+                    LiberaEntrada = false;
+                    Ret = EasyInner.LiberarCatracaEntrada(InnerAtual.Numero);
+                }
+                else
+                {
+                    if (LiberaEntradaInvertida)
+                    {
+                        EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "                ENTRADA LIBERADA");
+                        LiberaEntradaInvertida = false;
+                        Ret = EasyInner.LiberarCatracaEntradaInvertida(InnerAtual.Numero);
+                    }
+                    else
+                    {
+                        if (LiberaSaida)
+                        {
+                            EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "                 SAIDA LIBERADA");
+                            LiberaSaida = false;
+                            Ret = EasyInner.LiberarCatracaSaida(InnerAtual.Numero);
+                        }
+                        else
+                        {
+                            if (LiberaSaidaInvertida)
+                            {
+                                EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "                 SAIDA LIBERADA");
+                                LiberaSaidaInvertida = false;
+                                Ret = EasyInner.LiberarCatracaSaidaInvertida(InnerAtual.Numero);
+                            }
+                            else
+                            {
+                                Ret = EasyInner.LiberarCatracaDoisSentidos(InnerAtual.Numero);
+                            }
+                        }
+                    }
+                }
+        
+                //****************************************************************************
+                //****************************************************************************
+
+                //Testa Retorno do comando..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    EasyInner.AcionarBipCurto(InnerAtual.Numero);
+                    InnerAtual.CountPingFail = 0;
+                    InnerAtual.CountTentativasEnvioComando = 0;
+                    InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_MONITORA_GIRO_CATRACA;
+                }
+                else
+                {
+                    //Se o retorno for diferente de 0 tenta liberar a catraca 3 vezes, caso não consiga enviar o comando volta para o passo reconectar.
+                    if (InnerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    InnerAtual.CountTentativasEnvioComando++;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+        #endregion
+
+        #region ESTADO_MONITORA_GIRO_CATRACA
+        private static void PASSO_MONITORA_GIRO_CATRACA(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do giro
+                UiMainOnline.lblDados.Text = "Monitorando Giro de Catraca!";
+
+
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Monitora Giro da Catraca...";
+
+                //Declaração de Variáveis..
+                Bilhete Bilhetes = new Bilhete();
+                Bilhetes.Origem = 0;
+                Bilhetes.Complemento = 0;
+                Bilhetes.Cartao = null;
+                StringBuilder Cartao = new StringBuilder();
+                Bilhetes.Dia = 0;
+                Bilhetes.Mes = 0;
+                Bilhetes.Ano = 0;
+                Bilhetes.Hora = 0;
+                Bilhetes.Minuto = 0;
+                Bilhetes.Segundo = 0;
+                string strCartao = string.Empty;
+                int Ret = -1;
+
+                //Monitora o giro da catraca..
+                Ret = EasyInner.ReceberDadosOnLine(InnerAtual.Numero,
+                    ref Bilhetes.Origem, ref Bilhetes.Complemento, Cartao, ref Bilhetes.Dia, ref Bilhetes.Mes, ref Bilhetes.Ano, ref Bilhetes.Hora,
+                    ref Bilhetes.Minuto, ref Bilhetes.Segundo);
+
+                //Testa o retorno do comando..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //Testa se girou o não a catraca..
+                    if (Bilhetes.Origem == (int)Enumeradores.Origem.FIM_TEMPO_ACIONAMENTO)
+                    {
+                        UiMainOnline.lblDados.Text = "Não girou a catraca!";
+                    }
+                    else if (Bilhetes.Origem == (int)Enumeradores.Origem.GIRO_DA_CATRACA_TOPDATA)
+                    {
+                        UiMainOnline.lblDados.Text = "Girou a catraca para " + (Bilhetes.Complemento - Convert.ToInt16(UiMainOnline.optEsquerda.Checked) == 0 ? "entrada." : "saída.").ToString();
+                    }
+
+                    UiMainOnline.cmdEntrada.Enabled = true;
+                    UiMainOnline.cmdSair.Enabled = true;
+
+                    //Vai para o estado de Envio de Msg Padrão..
+                    InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_MSG_PADRAO;
+                }
+                else
+                {
+                    //Caso o tempo que estiver monitorando o giro chegue a 3 segundos,
+                    //deverá enviar o ping on line para manter o equipamento em modo on line
+                    TimeSpan tempo = DateTime.Now - InnerAtual.TempoInicialPingOnLine;
+                    if (tempo.Seconds >= 3)
+                    {
+                        InnerAtual.EstadoSolicitacaoPingOnLine = InnerAtual.EstadoAtual;
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.PING_ONLINE;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+                            
+            }
+        }
+        #endregion
+
+        #region ESTADO_MONITORA_URNA
+        private static void PASSO_ESTADO_MONITORA_URNA(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do giro
+                UiMainOnline.lblDados.Text = "Monitorando Giro de Catraca!";
+
+
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Monitora Giro da Catraca...";
+
+                //Declaração de Variáveis..
+                Bilhete Bilhetes = new Bilhete();
+                Bilhetes.Origem = 0;
+                Bilhetes.Complemento = 0;
+                Bilhetes.Cartao = null;
+                StringBuilder Cartao = new StringBuilder();
+                Bilhetes.Dia = 0;
+                Bilhetes.Mes = 0;
+                Bilhetes.Ano = 0;
+                Bilhetes.Hora = 0;
+                Bilhetes.Minuto = 0;
+                Bilhetes.Segundo = 0;
+                string strCartao = string.Empty;
+                int Ret = -1;
+
+                //Monitora o giro da catraca..
+                Ret = EasyInner.ReceberDadosOnLine(InnerAtual.Numero,
+                    ref Bilhetes.Origem, ref Bilhetes.Complemento, Cartao, ref Bilhetes.Dia, ref Bilhetes.Mes, ref Bilhetes.Ano, ref Bilhetes.Hora,
+                    ref Bilhetes.Minuto, ref Bilhetes.Segundo);
+
+                //Testa o retorno do comando..
+                if (Ret == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //Testa se girou o não a catraca..
+                    if (Bilhetes.Origem == (int)Enumeradores.Origem.URNA)
+                    {
+                        UiMainOnline.lblDados.Text = "URNA RECOLHEU CARTÃO";
+                        //Vai para o estado de Envio de Msg Padrão..
+                        LiberaSaida = true;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_LIBERAR_CATRACA;
+                    }
+                    else if (Bilhetes.Origem == (int)Enumeradores.Origem.FIM_TEMPO_ACIONAMENTO)
+                    {
+                        UiMainOnline.lblDados.Text = "NÃO DEPOSITOU CARTÃO";
+                        EasyInner.AcionarBipLongo(InnerAtual.Numero);
+                        EasyInner.EnviarMensagemPadraoOnLine(InnerAtual.Numero, 0, "     ACESSO          NEGADO");
+                        //Vai para o estado de Envio de Msg Padrão..
+                        InnerAtual.TempoInicialMensagem = DateTime.Now;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.AGUARDA_TEMPO_MENSAGEM;
+                    }
+                }
+                else
+                {
+                    //Caso o tempo que estiver monitorando o giro chegue a 3 segundos,
+                    //deverá enviar o ping on line para manter o equipamento em modo on line
+                    TimeSpan tempo = DateTime.Now - InnerAtual.TempoInicialPingOnLine;
+                    if (tempo.Seconds >= 3)
+                    {
+                        InnerAtual.EstadoSolicitacaoPingOnLine = InnerAtual.EstadoAtual;
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.PING_ONLINE;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+
+            }
+        }
+        #endregion
+        
+        #region PASSO_ESTADO_ENVIA_PING_ONLINE
+        private static void PASSO_ESTADO_ENVIA_PING_ONLINE(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                //Exibe estado do Inner no Rodapé da Janela
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " PING ONLINE...";
+
+                //Envia o comando de PING ON LINE, se o retorno for OK volta para o estado onde chamou o método
+                int retorno = EasyInner.PingOnLine(InnerAtual.Numero);
+                if (retorno == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    InnerAtual.EstadoAtual = InnerAtual.EstadoSolicitacaoPingOnLine;
+                    InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+                }
+                else
+                {
+                    //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                    if (InnerAtual.CountTentativasEnvioComando >= 3)
+                    {
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                    }
+                    InnerAtual.CountTentativasEnvioComando++;
+                }
+            }
+            catch (Exception ex)
+            {
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        }
+         
+        #endregion
+
+        #region PASSO_ESTADO_RECONECTAR
+        private static void PASSO_ESTADO_RECONECTAR(FrmOnline UiMainOnline, Inner InnerAtual)
+        {
+            try
+            {
+                TimeSpan tempo = DateTime.Now - InnerAtual.TempoInicialPingOnLine;
+                if (tempo.Seconds < 10)
+                {
+                    return;
+                }
+                InnerAtual.TempoInicialPingOnLine = DateTime.Now;
+
+                UiMainOnline.lblStatus.Text = "Inner " + InnerAtual.Numero + " Reconectando...";
+
+                //Realiza Ping de DLL.
+                int retorno = EasyInner.Ping(InnerAtual.Numero);
+                if (retorno == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                {
+                    //Caso o Inner esteja Realizando Ping, vai para o passo de Configuração.
+                    System.DateTime Data;
+                    Data = System.DateTime.Now;
+		            //Testa o comando de envio de relógio para o Inner
+                    if (EasyInner.EnviarRelogio(InnerAtual.Numero,
+                                                (byte)Data.Day,
+                                                (byte)Data.Month,
+                                                System.Convert.ToByte(Data.Year.ToString().Substring(2, 2)),
+                                                (byte)Data.Hour,
+                                                (byte)Data.Minute,
+                                                (byte)Data.Second) == (int)Enumeradores.Retorno.RET_COMANDO_OK)
+                    {
+                        //Zera as variáveis de controle da maquina de estados.
+                        InnerAtual.CountTentativasEnvioComando = 0;
+                        InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_ENVIAR_CFG_OFFLINE;
+                    }
+                    else
+                    {
+			            //caso ele não consiga, tentará enviar três vezes, se não conseguir volta para o passo Reconectar
+                        if (InnerAtual.CountTentativasEnvioComando >= 3)
+                        {
+                            InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_RECONECTAR;
+                        }
+                        InnerAtual.CountTentativasEnvioComando++;
+                    }
+                }
+                InnerAtual.CountRepeatPingOnline = 0;
+            }
+            catch (Exception ex)
+            {
+                InnerAtual.EstadoAtual = Enumeradores.EstadosInner.ESTADO_CONECTAR;
+            }
+        
+
+        }
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region IniciarMaquina
+        internal static void IniciarMaquina(FrmOnline UiMainOnline)
+        {
+            try
+            {
+                UiMainOnline.Ativa = true;
+
+                UiMainOnline.btnAdicionarUsuarioInnerOnline.Enabled = false;
+                UiMainOnline.btnRemoverInnerLista.Enabled = false;
+
+                FrmOnlineController.MaquinaOnline(UiMainOnline);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+            }
+        }
+        #endregion
+
+        #region PararMaquina
+        internal static void PararMaquina(FrmOnline UiMainOnline)
+        {
+            try
+            {
+                //Altera o flag da maquina de estados
+                UiMainOnline.Ativa = false;
+
+                //Libera botões..
+                UiMainOnline.btnAdicionarUsuarioInnerOnline.Enabled = true;
+                UiMainOnline.btnRemoverInnerLista.Enabled = true;
+
+                //Exibe no rodapé o Fim da execução..
+                UiMainOnline.lblStatus.Text = "Terminada execução Online...";
+
+                //Fecha a porta da Easy Inner.
+                EasyInner.FecharPortaComunicacao();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro:" + ex.Message);
+            }
+        }
+        #endregion
+    }
+}
