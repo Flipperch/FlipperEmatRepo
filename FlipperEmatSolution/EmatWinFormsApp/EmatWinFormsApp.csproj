@@ -8,4 +8,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Forms\FrGerenciamento.cs" />
+    <Compile Remove="Forms\FrGerenciamento.Designer.cs" />
+    <Compile Remove="Forms\FrSecretaria.cs" />
+    <Compile Remove="Forms\FrSecretaria.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Forms\FrGerenciamento.resx" />
+    <EmbeddedResource Remove="Forms\FrSecretaria.resx" />
+  </ItemGroup>
+
 </Project>
