@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="e33700b2-5351-48ae-a88a-8a3969cbd9fd" ChangeDateTime="07/15/2023 13:22:07">
+    <Property Name="ElementName" Value="[dbo].[Aluno].[Nome]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Aluno]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="NumeroMatricula" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7c3040ca-d5f2-40d0-9f15-48450eca9414" ChangeDateTime="07/15/2023 13:33:32">
+    <Property Name="ElementName" Value="[dbo].[Matricula].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Matricula]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MatriculaId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="737e975f-2df3-448b-a9a6-632b39527e95" ChangeDateTime="07/15/2023 13:46:16">
+    <Property Name="ElementName" Value="[dbo].[Aluno].[NumeroMatricula]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Aluno]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AlunoId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f0e5f0ad-294d-4cfd-81b1-889044256ef8" ChangeDateTime="07/15/2023 13:47:27">
+    <Property Name="ElementName" Value="[dbo].[Matricula].[NumeroMatricula]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Matricula]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AlunoId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="92cfc191-7262-4dab-ace2-a91ffd90a179" ChangeDateTime="07/15/2023 13:48:58">
+    <Property Name="ElementName" Value="[dbo].[Ensino].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ensino]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EnsinoId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="07ca6db1-d880-4bf6-8476-b2f07dfe4d1b" ChangeDateTime="07/15/2023 13:50:05">
+    <Property Name="ElementName" Value="[dbo].[Matricula].[DataMatricula]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Matricula]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Data" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8c08b389-dfc1-48ad-82c2-ed9f3d09b67d" ChangeDateTime="07/15/2023 13:51:07">
+    <Property Name="ElementName" Value="[dbo].[Matricula].[DataConclusao]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Matricula]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DataSituacao" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e13788a4-f246-40cf-bd92-c380adb691e8" ChangeDateTime="07/15/2023 14:00:39">
+    <Property Name="ElementName" Value="[dbo].[Situacao].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Situacao]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SituacaoId" />
+  </Operation>
+</Operations>

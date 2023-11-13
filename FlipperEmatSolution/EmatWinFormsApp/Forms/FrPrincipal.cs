@@ -1,6 +1,7 @@
 using EmatWinFormsApp.Forms.Acesso;
 using EmatWinFormsApp.Forms.Ajuda;
 using EmatWinFormsApp.Services;
+using EmatWinFormsApp.UserControls;
 using System.ComponentModel;
 
 namespace EmatWinFormsApp
@@ -16,7 +17,11 @@ namespace EmatWinFormsApp
 
             versionCheck();
 
-            addMainMenu();
+            //addMainMenu();
+
+            IdentityUserControl identityUserControl = new IdentityUserControl();
+
+            this.Controls.Add(identityUserControl);
         }
 
         private void versionCheck()

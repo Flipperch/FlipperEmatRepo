@@ -20,4 +20,8 @@
     <EmbeddedResource Remove="Forms\FrSecretaria.resx" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

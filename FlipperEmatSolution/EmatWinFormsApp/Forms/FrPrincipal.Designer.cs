@@ -35,7 +35,6 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            IsMdiContainer = true;
             Name = "FrPrincipal";
             ResumeLayout(false);
         }
