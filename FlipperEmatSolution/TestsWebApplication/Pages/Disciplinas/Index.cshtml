@@ -1,0 +1,45 @@
+﻿@page
+@model TestsWebApplication.Pages.Disciplinas.IndexModel
+@{
+    ViewData["Title"] = "Gerenciar Disciplinas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <p>
+        <a asp-page="./NovaDisciplina">Nova Disciplina</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Disciplinas[0].DisciplinaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Disciplinas[0].NomeDisciplina)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Disciplinas)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisciplinaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeDisciplina)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.DisciplinaId">Alterar</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.DisciplinaId">Detalhes</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.DisciplinaId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

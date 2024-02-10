@@ -1,0 +1,20 @@
+﻿CREATE PROCEDURE [dbo].[spGetAllMatriculasPorDataInicio]
+	@dataInicial datetime, --'01/01/2021'
+	@dataFinal datetime -- '31/12/2021'
+AS
+BEGIN
+SELECT
+	ENSINO_ALUNO.CODIGO MatriculaId,
+	ENSINO_ALUNO.N_MAT AlunoId,
+	ENSINO_ALUNO.COD_ENSINO CursoId,
+	ENSINO.NOME_ENSINO CursoNome,
+	DT_INICIO DataInicio,
+	FORMAT(DT_INICIO, 'dd/MM/yyyy') DataInicioFormatado
+FROM 
+	ENSINO_ALUNO
+JOIN 
+	ENSINO ON ENSINO_ALUNO.COD_ENSINO = ENSINO.CODIGO
+WHERE 
+	DT_INICIO BETWEEN @dataInicial AND @dataFinal
+ORDER BY DT_INICIO
+END

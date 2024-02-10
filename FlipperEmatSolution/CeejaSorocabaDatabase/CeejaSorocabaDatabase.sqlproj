@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>CeejaSorocabaDatabase</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{24772dd2-2076-4b40-a565-e70f13ec94fe}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>CeejaSorocabaDatabase</RootNamespace>
+    <AssemblyName>CeejaSorocabaDatabase</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Views" />
+    <Folder Include="PublishLocations" />
+    <Folder Include="Snapshots" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\ATENDIMENTO_ALUNO_TEMP.sql" />
+    <Build Include="dbo\Tables\ALUNO.sql" />
+    <Build Include="dbo\Tables\AREA.sql" />
+    <Build Include="dbo\Tables\PRINT_LOG.sql" />
+    <Build Include="dbo\Tables\AREA_DISCIPLINA.sql" />
+    <Build Include="dbo\Tables\AREA_PROFESSOR.sql" />
+    <Build Include="dbo\Tables\ATENDIMENTO.sql" />
+    <Build Include="dbo\Tables\ATENDIMENTO_ALUNO.sql" />
+    <Build Include="dbo\Tables\ATIVIDADE_EXTRA.sql" />
+    <Build Include="dbo\Tables\TB_BKP_MEDIAS_SEM_ATENDIMENTO.sql" />
+    <Build Include="dbo\Tables\CIDADE.sql" />
+    <Build Include="dbo\Tables\DEFICIENCIA.sql" />
+    <Build Include="dbo\Tables\DEFICIENCIA_ALUNO.sql" />
+    <Build Include="dbo\Tables\DEFICIENCIA_USUARIO.sql" />
+    <Build Include="dbo\Tables\DISCIPLINA.sql" />
+    <Build Include="dbo\Tables\DISCIPLINA_ALUNO.sql" />
+    <Build Include="dbo\Tables\ACCESS_LOG_SERVICE.sql" />
+    <Build Include="dbo\Tables\CARTAO_ACESSO.sql" />
+    <Build Include="dbo\Tables\EMPREGO_ALUNO.sql" />
+    <Build Include="dbo\Tables\ENDERECO_ALUNO.sql" />
+    <Build Include="dbo\Tables\ENSINO_ALUNO.sql" />
+    <Build Include="dbo\Tables\HISTORICO_ESCOLAR.sql" />
+    <Build Include="dbo\Tables\MOVIMENTACAO.sql" />
+    <Build Include="dbo\Tables\LOCAL_NASCIMENTO.sql" />
+    <Build Include="dbo\Tables\LOG_ACESSO.sql" />
+    <Build Include="dbo\Tables\MEDIA.sql" />
+    <Build Include="dbo\Tables\NOTA.sql" />
+    <Build Include="dbo\Tables\PAIS.sql" />
+    <Build Include="dbo\Tables\PROFESSOR.sql" />
+    <Build Include="dbo\Tables\REMATRICULA.sql" />
+    <Build Include="dbo\Tables\UF.sql" />
+    <Build Include="dbo\Tables\USUARIO.sql" />
+    <Build Include="dbo\Tables\LOG_CATRACA.sql" />
+    <Build Include="dbo\Tables\ENSINO.sql" />
+    <Build Include="dbo\Tables\ERROR_LOG.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTO_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTO_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTO_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATIVIDADE_EXTRADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATIVIDADE_EXTRAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATIVIDADE_EXTRASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATIVIDADE_EXTRAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CARTAO_ACESSODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CARTAO_ACESSOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CARTAO_ACESSOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CARTAO_ACESSOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CIDADEDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CIDADEInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CIDADESelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CIDADEUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DEFICIENCIA_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DEFICIENCIADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DEFICIENCIAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DEFICIENCIASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DEFICIENCIAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINA_ALUNODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINA_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINA_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINA_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_EMPREGO_ALUNODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_EMPREGO_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_EMPREGO_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_EMPREGO_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENDERECO_ALUNODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENDERECO_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENDERECO_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENDERECO_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENSINO_ALUNODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENSINO_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENSINO_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ENSINO_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_HISTORICO_ESCOLARDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_HISTORICO_ESCOLARInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_HISTORICO_ESCOLARSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_HISTORICO_ESCOLARUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_INATIVACAO_ALUNODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_INATIVACAO_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_INATIVACAO_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_INATIVACAO_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOCAL_NASCIMENTODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOCAL_NASCIMENTOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOCAL_NASCIMENTOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_DISCIPLINA_ALUNOSelectOrdenadoPeloUltimoAtendimento.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOCAL_NASCIMENTOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_ACESSODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_ACESSOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_ACESSOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_ACESSOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_CATRACADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_CATRACAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_CATRACASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_LOG_CATRACAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_NOTADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_NOTAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_NOTASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_NOTAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PAISDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PAISInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PAISSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PAISUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PROFESSORDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PROFESSORInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PROFESSORSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_PROFESSORUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_REMATRICULADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_REMATRICULAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_REMATRICULASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_REMATRICULAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UFDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UFInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UFSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_UFUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_USUARIODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_USUARIOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_USUARIOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_USUARIOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MEDIADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MEDIAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MEDIASelect.sql" />
+    <Build Include="dbo\Stored Procedures\ADD_ATENDIMENTOS_NOTAS_MEDIAS.sql" />
+    <Build Include="dbo\Stored Procedures\usp_MEDIAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\spGetAllMatriculasPorDataInicio.sql" />
+    <Build Include="dbo\Stored Procedures\spGetAllRematriculasPorDataRematricula.sql" />
+    <Build Include="dbo\Stored Procedures\ADD_ALUNO.sql" />
+    <Build Include="dbo\Stored Procedures\DBA_EXLUIR_ALUNO.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ALUNODelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ALUNOInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ALUNOSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ALUNOUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREA_PROFESSORDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREA_PROFESSORInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREA_PROFESSORSelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREADelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREAInsert.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREASelect.sql" />
+    <Build Include="dbo\Stored Procedures\usp_AREAUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\usp_ATENDIMENTO_ALUNODelete.sql" />
+    <Build Include="dbo\Views\vwUsuario.sql" />
+    <Build Include="dbo\Views\vwTipoEnsino.sql" />
+    <Build Include="dbo\Views\vwMatricula.sql" />
+    <Build Include="dbo\Views\vwRematricula.sql" />
+    <Build Include="dbo\Views\vwDisciplina.sql" />
+    <Build Include="dbo\Views\vwAluno.sql" />
+    <Build Include="dbo\Views\vwArea.sql" />
+    <Build Include="dbo\Views\vwTipoAtendimento.sql" />
+    <Build Include="dbo\Views\vwPais.sql" />
+    <Build Include="dbo\Views\vwUf.sql" />
+    <Build Include="dbo\Views\vwCidade.sql" />
+    <Build Include="dbo\Views\vwHistoricoEscolar.sql" />
+    <Build Include="dbo\Views\vwDisciplinaAluno.sql" />
+    <Build Include="dbo\Views\vwAtendimento.sql" />
+    <Build Include="dbo\Views\vwMedia.sql" />
+    <Build Include="dbo\Views\vwNota.sql" />
+    <Build Include="dbo\Views\vwEnderecoAluno.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Snapshots\CeejaSorocabaDatabase_20231122_12-27-57.dacpac" />
+    <None Include="PublishLocations\CeejaSorocabaDatabase.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CeejaSorocabaDatabase.refactorlog" />
+  </ItemGroup>
+</Project>

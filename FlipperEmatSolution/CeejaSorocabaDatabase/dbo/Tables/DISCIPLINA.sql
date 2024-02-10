@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[DISCIPLINA] (
+    [CODIGO]          TINYINT       IDENTITY (1, 1) NOT NULL,
+    [NOME]            VARCHAR (MAX) NULL,
+    [NOME_HISTORICO]  VARCHAR (MAX) NULL,
+    [HORARIO]         VARCHAR (MAX) NULL,
+    [CAPACIDADE]      VARCHAR (MAX) NULL,
+    [ORDEM]           TINYINT       NULL,
+    [BLOQ_ATRIBUICAO] BIT           NULL,
+    PRIMARY KEY CLUSTERED ([CODIGO] ASC)
+);
+

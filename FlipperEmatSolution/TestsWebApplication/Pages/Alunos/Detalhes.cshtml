@@ -1,0 +1,309 @@
+﻿@page
+@model TestsWebApplication.Pages.Alunos.DetalhesModel
+@{
+    ViewData["Title"] = "Detalhes Aluno";
+}
+
+<h1>@ViewData["Title"]</h1>
+<form>
+    <p>
+        Matrícula Ceeja: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<div class="container">
+    <p>
+        <a asp-page="./Index">Retornar</a> Campo Para Pesquisa na Index Alunos
+    </p>
+    <div>
+        <h4>Aluno</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.MatriculaCeeja)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.MatriculaCeeja)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.DataMatriculaCeeja)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.DataMatriculaCeeja)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Cpf)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Cpf)
+            </dd>
+            @*Ra*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Ra)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Ra)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.DigRa)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.DigRa)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.UfRa)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.UfRa)
+            </dd>
+            @*Rg*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Rg)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Rg)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.UfRg)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.UfRg)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.OrgaoRg)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.OrgaoRg)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.DataRg)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.DataRg)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Nome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Nome)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.NomeSocial)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.NomeSocial)
+            </dd>
+            @*Data Nascimento*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.DataNascimento)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.DataNascimento)
+            </dd>
+            @*Local Nascimento VIEWMODEL*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LocalNascimento.CidadeNome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LocalNascimento.CidadeNome)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LocalNascimento.UfNome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LocalNascimento.UfNome)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LocalNascimento.PaisNome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LocalNascimento.PaisNome)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Sexo)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Sexo)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.NomeMae)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.NomeMae)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.NomePai)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.NomePai)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.EstadoCivil)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.EstadoCivil)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.CorOrigemEtnica)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.CorOrigemEtnica)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Telefone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Telefone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Celular)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Celular)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.TermoMatricula)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.TermoMatricula)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Ativo)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Ativo)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Concluinte)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.Concluinte)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.ObsPassaporte)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.ObsPassaporte)
+            </dd>
+            @*Apresentou Documentos*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.ApresentouCertidao)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.ApresentouCertidao)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.ApresentouHistorico)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.ApresentouHistorico)
+            </dd>
+            @*Usuário que fez a matricula. Verificar se tem necessidade... Registrar quem modificou...*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.UsuarioId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Aluno.UsuarioId)
+            </dd>
+
+            @*Endereço*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.Cep)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.Cep)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.Logradouro)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.Logradouro)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.Numero)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.Numero)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.Bairro)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.Bairro)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.Complemento)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.Complemento)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.UfNome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.UfNome)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.EnderecoAluno.CidadeNome)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EnderecoAluno.CidadeNome)
+            </dd>
+
+            @*Matrículas*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Aluno.Matriculas)
+            </dt>
+            <dd class="col-sm-10">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>MatriculaId</th>
+                            <th>MatriculaCeeja</th>
+                            <th>TipoEnsinoId</th>
+                            <th>Atual</th>
+                            <th>DataInicio</th>
+                            <th>DataFinal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Aluno.Matriculas)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MatriculaId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MatriculaCeeja)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoEnsinoId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Atual)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataInicio)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DataFinal)
+                                </td>
+                                <td>
+                                    <a asp-page="/Matriculas/Edit" asp-route-id="@item.MatriculaId">Alterar</a> |
+                                    <a asp-page="/Matriculas/Detalhes" asp-route-id="@item.MatriculaId">Detalhes</a> |
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </dd>
+        </dl>
+    </div>
+</div>

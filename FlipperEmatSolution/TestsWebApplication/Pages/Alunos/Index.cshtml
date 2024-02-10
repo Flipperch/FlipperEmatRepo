@@ -1,0 +1,121 @@
+﻿@page
+@model TestsWebApplication.Pages.Alunos.IndexModel
+@{
+    ViewData["Title"] = "Alunos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <select asp-for="SearchType" asp-items="Model.SearchTypes"></select>
+            Find by name:
+            @*<input type="text" name="SearchString" value="@Model.CurrentFilter" oninput="this.value = this.value.toUpperCase()" />*@
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+@if (Model.Alunos.TotalPages > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.MatriculaCeejaSort"
+                       asp-route-searchType="@Model.SearchType"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.Alunos[0].MatriculaCeeja)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.NomeSort"
+                       asp-route-searchType="@Model.SearchType"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.Alunos[0].Nome)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.RaSort"
+                       asp-route-searchType="@Model.SearchType"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.Alunos[0].Ra)
+                    </a>
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.RgSort"
+                       asp-route-searchType="@Model.SearchType"
+                       asp-route-currentFilter="@Model.CurrentFilter">
+                        @Html.DisplayNameFor(model => model.Alunos[0].Rg)
+                    </a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Alunos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MatriculaCeeja)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ra)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rg)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.MatriculaCeeja">Edit</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.MatriculaCeeja">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum resultado encontrado.</p>
+}
+
+
+
+@{
+    var prevDisabled = !Model.Alunos.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Alunos.HasNextPage ? "disabled" : "";
+}
+
+@if (Model.Alunos.TotalPages > 0)
+{
+    <p>Página @Model.Alunos.PageIndex de @Model.Alunos.TotalPages</p>
+}
+
+
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Alunos.PageIndex - 1)"
+   asp-route-searchType="@Model.SearchType"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Alunos.PageIndex + 1)"
+   asp-route-searchType="@Model.SearchType"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

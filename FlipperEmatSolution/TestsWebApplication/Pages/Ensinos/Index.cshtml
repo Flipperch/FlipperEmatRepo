@@ -1,0 +1,44 @@
+﻿@page
+@model TestsWebApplication.Pages.Ensinos.IndexModel
+@{
+    ViewData["Title"] = "Gerenciar Tipos de Ensino";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <p>
+        <a asp-page="./NovoTipoEnsino">Novo Tipo de Ensino</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaTipoEnsinos[0].TipoEnsinoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaTipoEnsinos[0].TipoEnsinoNome)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaTipoEnsinos)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEnsinoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEnsinoNome)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.TipoEnsinoId">Alterar</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.TipoEnsinoId">Detalhes</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.TipoEnsinoId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

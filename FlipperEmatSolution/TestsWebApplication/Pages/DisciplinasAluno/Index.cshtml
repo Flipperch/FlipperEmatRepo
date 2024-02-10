@@ -1,0 +1,99 @@
+﻿@page
+@model TestsWebApplication.Pages.DisciplinasAluno.IndexModel
+@{
+    ViewData["Title"] = "Index Disciplinas Alunos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Paged list of Persons (@Model.ListaDisciplinaAluno.TotalItems)</h4>
+<form>
+    <p>
+        Matrícula Id: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ListaDisciplinaAluno[0].DisciplinaAlunoId)*@
+                    @Html.DisplayNameFor(model => model.DisciplinaAluno.DisciplinaAlunoId)
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ListaDisciplinaAluno[0].MatriculaId)*@
+                    @Html.DisplayNameFor(model => model.DisciplinaAluno.MatriculaId)
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ListaDisciplinaAluno[0].DisciplinaId)*@
+                    @Html.DisplayNameFor(model => model.DisciplinaAluno.DisciplinaId)
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ListaDisciplinaAluno[0].Atual)*@
+                    @Html.DisplayNameFor(model => model.DisciplinaAluno.Atual)
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ListaDisciplinaAluno[0].Concluida)*@
+                    @Html.DisplayNameFor(model => model.DisciplinaAluno.Concluida)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaDisciplinaAluno.Items)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisciplinaAlunoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MatriculaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DisciplinaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Atual)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Concluida)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.DisciplinaAlunoId">Alterar</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.DisciplinaAlunoId">Detalhes</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.DisciplinaAlunoId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.ListaDisciplinaAluno.PageNumbers.Any())
+{
+    <nav class="table-responsive">
+        <ul class="pagination justify-content-center d-flex flex-wrap">
+            <li class="page-item @(Model.ListaDisciplinaAluno.PageNumber > 1 ? "enabled" : "disabled")">
+                <a class="page-link" href="/DisciplinasAluno/Index">First</a>
+            </li>
+            <li class="page-item @(Model.ListaDisciplinaAluno.PageNumber > 1 ? "enabled" : "disabled")">
+                <a class="page-link" href="/DisciplinasAluno/Index/?pageNumber=@(Model.ListaDisciplinaAluno.PageNumber - 1)">Prev</a>
+            </li>
+
+            @foreach (var pageNumber in Model.ListaDisciplinaAluno.PageNumbers)
+            {
+                <li class="page-item @(pageNumber == Model.ListaDisciplinaAluno.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/DisciplinasAluno/Index/?pageNumber=@pageNumber">@pageNumber</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.ListaDisciplinaAluno.PageNumber < Model.ListaDisciplinaAluno.TotalPages ? "enabled" : "disabled")">
+                <a class="page-link" href="/DisciplinasAluno/Index/?pageNumber=@(Model.ListaDisciplinaAluno.PageNumber + 1)">Next</a>
+            </li>
+            <li class="page-item @(Model.ListaDisciplinaAluno.PageNumber < Model.ListaDisciplinaAluno.TotalPages ? "enabled" : "disabled")">
+                <a class="page-link" href="/DisciplinasAluno/Index/?pageNumber=@(Model.ListaDisciplinaAluno.TotalPages)">Last</a>
+            </li>
+        </ul>
+    </nav>
+}

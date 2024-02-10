@@ -1,0 +1,44 @@
+﻿@page
+@model TestsWebApplication.Pages.Areas.IndexModel
+@{
+    ViewData["Title"] = "Gerenciar Areas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <p>
+        <a asp-page="./NovaArea">Nova Area</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Areas[0].AreaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Areas[0].NomeArea)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Areas)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AreaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeArea)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.AreaId">Alterar</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.AreaId">Detalhes</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.AreaId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

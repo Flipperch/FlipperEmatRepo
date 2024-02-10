@@ -1,0 +1,13 @@
+﻿CREATE PROC [dbo].[usp_PROFESSORDelete] 
+    @CODIGO smallint
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	DELETE
+	FROM   [dbo].[PROFESSOR]
+	WHERE  [CODIGO] = @CODIGO
+
+	COMMIT

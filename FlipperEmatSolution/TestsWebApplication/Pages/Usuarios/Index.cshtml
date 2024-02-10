@@ -1,0 +1,52 @@
+﻿@page
+@model TestsWebApplication.Pages.Usuarios.IndexModel
+@{
+    ViewData["Title"] = "Gerenciar Usuários";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <p>
+        <a asp-page="./NovoUsuario">Novo Usuário</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaUsuarios[0].Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaUsuarios[0].Rg)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaUsuarios[0].Ativo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaUsuarios)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rg)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ativo)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.UsuarioId">Alterar</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.UsuarioId">Detalhes</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.UsuarioId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

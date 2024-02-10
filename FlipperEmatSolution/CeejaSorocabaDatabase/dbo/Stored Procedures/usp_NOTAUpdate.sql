@@ -1,0 +1,20 @@
+﻿CREATE PROC [dbo].[usp_NOTAUpdate] 
+    @COD_ATENDIMENTO_ALUNO int,
+    @NOTA float
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	UPDATE [dbo].[NOTA]
+	SET    [NOTA] = @NOTA
+	WHERE  [COD_ATENDIMENTO_ALUNO] = @COD_ATENDIMENTO_ALUNO
+	
+	-- Begin Return Select <- do not remove
+	SELECT [COD_ATENDIMENTO_ALUNO], [NOTA]
+	FROM   [dbo].[NOTA]
+	WHERE  [COD_ATENDIMENTO_ALUNO] = @COD_ATENDIMENTO_ALUNO	
+	-- End Return Select <- do not remove
+
+	COMMIT

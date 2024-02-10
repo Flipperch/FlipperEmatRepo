@@ -1,0 +1,22 @@
+﻿CREATE PROC [dbo].[usp_REMATRICULAUpdate] 
+    @CODIGO int,
+    @DT_REMATRICULA datetime,
+    @COD_USUARIO smallint,
+    @COD_ENSINO_ALUNO int
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	UPDATE [dbo].[REMATRICULA]
+	SET    [DT_REMATRICULA] = @DT_REMATRICULA, [COD_USUARIO] = @COD_USUARIO, [COD_ENSINO_ALUNO] = @COD_ENSINO_ALUNO
+	WHERE  [CODIGO] = @CODIGO
+	
+	-- Begin Return Select <- do not remove
+	SELECT [CODIGO], [DT_REMATRICULA], [COD_USUARIO], [COD_ENSINO_ALUNO]
+	FROM   [dbo].[REMATRICULA]
+	WHERE  [CODIGO] = @CODIGO	
+	-- End Return Select <- do not remove
+
+	COMMIT

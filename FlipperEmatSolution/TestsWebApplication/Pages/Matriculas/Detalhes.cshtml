@@ -1,0 +1,103 @@
+﻿@page
+@model TestsWebApplication.Pages.Matriculas.DetalhesModel
+@{
+    ViewData["Title"] = "Detalhes Matrícula";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <p>
+        <a asp-page="./Index">Retornar</a>
+    </p>
+    <div>
+        <h4>Matrícula</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.MatriculaId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Matricula.MatriculaId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.MatriculaCeeja)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Matricula.MatriculaCeeja)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.TipoEnsinoId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Matricula.TipoEnsinoId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.Atual)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Matricula.Atual)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.DataInicio)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Matricula.DataInicio)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.DataFinal)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Matricula.DataFinal)
+            </dd>
+           
+            @*Disciplinas Aluno*@
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Matricula.DisciplinasAluno)
+            </dt>
+            <dd class="col-sm-10">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>DisciplinaAlunoId</th>
+                            <th>MatriculaId</th>
+                            <th>DisciplinaId</th>
+                            <th>Atual</th>
+                            <th>Concluida</th>
+                            <th>Media</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Matricula.DisciplinasAluno)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DisciplinaAlunoId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MatriculaId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DisciplinaId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Atual)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Concluida)
+                                </td>
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.Media.MediaValor)*@
+                                </td>
+                                <td>
+                                    <a asp-page="/DisciplinasAluno/Edit" asp-route-id="@item.DisciplinaAlunoId">Alterar</a> |
+                                    <a asp-page="/DisciplinasAluno/Detalhes" asp-route-id="@item.DisciplinaAlunoId">Detalhes</a> |
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </dd>
+        </dl>
+    </div>
+</div>

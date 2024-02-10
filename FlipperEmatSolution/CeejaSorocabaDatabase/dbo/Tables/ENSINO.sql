@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[ENSINO] (
+    [CODIGO]      INT          NOT NULL,
+    [NOME_ENSINO] VARCHAR (50) NOT NULL
+);
+

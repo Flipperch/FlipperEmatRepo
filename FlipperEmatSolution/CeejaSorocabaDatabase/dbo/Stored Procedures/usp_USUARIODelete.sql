@@ -1,0 +1,13 @@
+﻿CREATE PROC [dbo].[usp_USUARIODelete] 
+    @CODIGO smallint
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	DELETE
+	FROM   [dbo].[USUARIO]
+	WHERE  [CODIGO] = @CODIGO
+
+	COMMIT

@@ -1,0 +1,20 @@
+﻿CREATE PROC [dbo].[usp_REMATRICULAInsert] 
+    @DT_REMATRICULA datetime,
+    @COD_USUARIO smallint,
+    @COD_ENSINO_ALUNO int
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+	
+	INSERT INTO [dbo].[REMATRICULA] ([DT_REMATRICULA], [COD_USUARIO], [COD_ENSINO_ALUNO])
+	SELECT @DT_REMATRICULA, @COD_USUARIO, @COD_ENSINO_ALUNO
+	
+	-- Begin Return Select <- do not remove
+	SELECT [CODIGO], [DT_REMATRICULA], [COD_USUARIO], [COD_ENSINO_ALUNO]
+	FROM   [dbo].[REMATRICULA]
+	WHERE  [CODIGO] = SCOPE_IDENTITY()
+	-- End Return Select <- do not remove
+               
+	COMMIT

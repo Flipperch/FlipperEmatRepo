@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[ERROR_LOG] (
+    [ID_ERROR_LOG] INT           IDENTITY (1, 1) NOT NULL,
+    [DATETIME]     DATETIME      NULL,
+    [THREAD]       VARCHAR (50)  NULL,
+    [TYPE]         VARCHAR (50)  NULL,
+    [SOURCE]       VARCHAR (300) NULL,
+    [MESSAGE]      VARCHAR (MAX) NULL,
+    [EXCEPTION]    VARCHAR (MAX) NULL
+);
+

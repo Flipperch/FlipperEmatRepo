@@ -1,0 +1,13 @@
+﻿CREATE PROC [dbo].[usp_ALUNODelete] 
+    @N_MAT int
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	DELETE
+	FROM   [dbo].[ALUNO]
+	WHERE  [N_MAT] = @N_MAT
+
+	COMMIT

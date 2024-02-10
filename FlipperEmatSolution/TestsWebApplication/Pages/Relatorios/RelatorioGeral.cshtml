@@ -1,0 +1,73 @@
+﻿@page
+@model TestsWebApplication.Pages.Relatorios.RelatorioGeralModel
+@{
+}
+
+<p>
+    Relatório Geral
+</p>
+
+<form asp-page="./RelatorioGeral" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <input class="form-control" asp-for="PeriodoInicial" />
+            <input class="form-control" asp-for="PeriodoFinal" />
+            <input type="submit" value="Filtrar" />
+        </p>
+    </div>
+</form>
+
+
+
+<div class="container">
+    <p>
+        <a asp-page="./NovoTipoEnsino">Novo Tipo de Ensino</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaSituacaoTipoEnsinoViewModel[0].TipoEnsino.TipoEnsinoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaSituacaoTipoEnsinoViewModel[0].TipoEnsino.TipoEnsinoNome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaSituacaoTipoEnsinoViewModel[0].QuantidadeMatriculas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaSituacaoTipoEnsinoViewModel[0].QuantidadeRematriculas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ListaSituacaoTipoEnsinoViewModel[0].QuantidadeConclusoes)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaSituacaoTipoEnsinoViewModel)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEnsino.TipoEnsinoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEnsino.TipoEnsinoNome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantidadeMatriculas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantidadeRematriculas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QuantidadeConclusoes)
+                    </td>
+                    <td>
+                        <a asp-page="./Detalhes" asp-route-id="@item.TipoEnsino.TipoEnsinoId">Detalhes</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

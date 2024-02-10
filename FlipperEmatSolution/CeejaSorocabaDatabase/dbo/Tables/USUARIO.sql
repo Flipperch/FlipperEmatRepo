@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[USUARIO] (
+    [CODIGO]       SMALLINT      IDENTITY (1, 1) NOT NULL,
+    [NOME]         VARCHAR (100) NULL,
+    [NOME_ACESSO]  VARCHAR (20)  NULL,
+    [SENHA]        VARCHAR (20)  NULL,
+    [RG]           VARCHAR (20)  NULL,
+    [NIVEL_ACESSO] TINYINT       NULL,
+    [ATIVO]        BIT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([CODIGO] ASC)
+);
+

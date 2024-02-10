@@ -1,0 +1,44 @@
+﻿@page "{teste?}"
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<p>
+    <a asp-page="./Alunos/Index">Alunos</a>
+</p>
+<p>
+    <a asp-page="./Areas/Index">Áreas</a>
+</p>
+<p>
+    <a asp-page="./Ensinos/Index">Tipos de Ensino</a>
+</p>
+<p>
+    <a asp-page="./Disciplinas/Index">Disciplinas</a>
+</p>
+<p>
+    <a asp-page="./TiposAtendimento/Index">Tipos de Atendimento</a>
+</p>
+<p>
+    <a asp-page="./Matriculas/Index">Matrículas</a>
+</p>
+<p>
+    <a asp-page="./DisciplinasAluno/Index">Disciplinas Alunos</a>
+</p>
+<p>
+    <input type="text" name="textoPesquisa" />
+    <a asp-page="./DisciplinasAluno/Detalhes" asp-route-id="3">Details</a>
+    @*<a asp-page="./DisciplinasAluno/Detalhes">Disciplina Aluno 500 </a>*@
+</p>
+<p>
+    <a asp-page="./Usuarios/Index">Usuários</a>
+</p>
+<p>
+    <a asp-page="./Relatorios/RelatorioGeral">Relatórios</a>
+</p>
+
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>

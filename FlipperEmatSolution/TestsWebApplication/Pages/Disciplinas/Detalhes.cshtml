@@ -1,0 +1,98 @@
+﻿@page
+@model TestsWebApplication.Pages.Disciplinas.DetalhesModel
+@{
+    ViewData["Title"] = "Detalhes Disciplina";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <p>
+        <a asp-page="./Index">Retornar</a>
+    </p> 
+    <div>
+        <h4>Disciplina</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.DisciplinaId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.DisciplinaId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.NomeDisciplina)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.NomeDisciplina)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.NomeDisciplinaHistorico)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.NomeDisciplinaHistorico)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.Horario)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.Horario)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.Capacidade)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.Capacidade)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.Ordem)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.Ordem)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.BloqueioAtribuicao)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Disciplina.BloqueioAtribuicao)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Disciplina.TiposAtendimento)
+            </dt>
+            <dd class="col-sm-10">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>TipoAtendimentoId</th>
+                            <th>TipoAtendimentoNome</th>
+                            <th>Ativo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Disciplina.TiposAtendimento)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoAtendimentoId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoAtendimentoNome)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ativo)
+                                </td>
+                                <td>
+                                    <a asp-page=".TiposAtendimentos/Edit" asp-route-id="@item.TipoAtendimentoId">Alterar</a> |
+                                    <a asp-page=".TiposAtendimentos/Detalhes" asp-route-id="@item.TipoAtendimentoId">Detalhes</a> |
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </dd>
+        </dl>
+    </div>    
+</div>
+
+

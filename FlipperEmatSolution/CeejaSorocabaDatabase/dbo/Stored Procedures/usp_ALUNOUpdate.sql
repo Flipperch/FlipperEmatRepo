@@ -1,0 +1,44 @@
+﻿CREATE PROC [dbo].[usp_ALUNOUpdate] 
+    @N_MAT int,
+    @DT_MAT datetime = NULL,
+    @CPF varchar(MAX) = NULL,
+    @RA nvarchar(MAX) = NULL,
+    @RG nvarchar(MAX) = NULL,
+    @UF_RG nvarchar(MAX) = NULL,
+    @ORGAO_RG nvarchar(MAX) = NULL,
+    @DT_RG date = NULL,
+    @NOME nvarchar(MAX) = NULL,
+    @DT_NASCIMENTO date = NULL,
+    @SEXO int = NULL,
+    @NOME_MAE nvarchar(MAX) = NULL,
+    @NOME_PAI varchar(MAX) = NULL,
+    @ESTADO_CIVIL int = NULL,
+    @COR_ORIGEM_ETNICA int = NULL,
+    @TELEFONE nvarchar(MAX) = NULL,
+    @CELULAR nvarchar(MAX) = NULL,
+    @TERMO_MAT nvarchar(MAX) = NULL,
+    @E_MAIL nvarchar(MAX) = NULL,
+    @ATIVO bit = NULL,
+    @CONCLUINTE bit = NULL,
+    @OBS_PASSAPORTE nvarchar(MAX) = NULL,
+    @APRESENTOU_CERTIDAO bit = NULL,
+    @APRESENTOU_HISTORICO bit = NULL,
+    @NOME_SOCIAL nvarchar(MAX) = NULL,
+    @COD_USUARIO smallint = NULL
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	UPDATE [dbo].[ALUNO]
+	SET    [DT_MAT] = @DT_MAT, [CPF] = @CPF, [RA] = @RA, [RG] = @RG, [UF_RG] = @UF_RG, [ORGAO_RG] = @ORGAO_RG, [DT_RG] = @DT_RG, [NOME] = @NOME, [DT_NASCIMENTO] = @DT_NASCIMENTO, [SEXO] = @SEXO, [NOME_MAE] = @NOME_MAE, [NOME_PAI] = @NOME_PAI, [ESTADO_CIVIL] = @ESTADO_CIVIL, [COR_ORIGEM_ETNICA] = @COR_ORIGEM_ETNICA, [TELEFONE] = @TELEFONE, [CELULAR] = @CELULAR, [TERMO_MAT] = @TERMO_MAT, [E_MAIL] = @E_MAIL, [ATIVO] = @ATIVO, [CONCLUINTE] = @CONCLUINTE, [OBS_PASSAPORTE] = @OBS_PASSAPORTE, [APRESENTOU_CERTIDAO] = @APRESENTOU_CERTIDAO, [APRESENTOU_HISTORICO] = @APRESENTOU_HISTORICO, [NOME_SOCIAL] = @NOME_SOCIAL, [COD_USUARIO] = @COD_USUARIO
+	WHERE  [N_MAT] = @N_MAT
+	
+	-- Begin Return Select <- do not remove
+	SELECT [N_MAT], [DT_MAT], [CPF], [RA], [RG], [UF_RG], [ORGAO_RG], [DT_RG], [NOME], [DT_NASCIMENTO], [SEXO], [NOME_MAE], [NOME_PAI], [ESTADO_CIVIL], [COR_ORIGEM_ETNICA], [TELEFONE], [CELULAR], [TERMO_MAT], [E_MAIL], [ATIVO], [CONCLUINTE], [OBS_PASSAPORTE], [APRESENTOU_CERTIDAO], [APRESENTOU_HISTORICO], [NOME_SOCIAL], [COD_USUARIO]
+	FROM   [dbo].[ALUNO]
+	WHERE  [N_MAT] = @N_MAT	
+	-- End Return Select <- do not remove
+
+	COMMIT

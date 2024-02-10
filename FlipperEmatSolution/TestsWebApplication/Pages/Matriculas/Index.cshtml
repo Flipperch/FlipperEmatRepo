@@ -1,0 +1,102 @@
+﻿@page
+@model TestsWebApplication.Pages.Matriculas.IndexModel
+@{
+    ViewData["Title"] = "Matrículas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Paged list of Persons (@Model.ListaMatricula.TotalItems)</h4>
+<form>
+    <p>
+        Matrícula Ceeja: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+<div class="container">
+    <p>
+        <a asp-page="./NovoMatricula">Nova Matrícula</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Matricula.MatriculaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Matricula.MatriculaCeeja)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Matricula.TipoEnsinoId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Matricula.Atual)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Matricula.DataInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Matricula.DataFinal)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListaMatricula.Items)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MatriculaId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MatriculaCeeja)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoEnsinoId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Atual)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataFinal)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.MatriculaId">Alterar</a> |
+                        <a asp-page="./Detalhes" asp-route-id="@item.MatriculaId">Detalhes</a> |
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.ListaMatricula.PageNumbers.Any())
+{
+    <nav class="table-responsive">
+        <ul class="pagination justify-content-center d-flex flex-wrap">
+            <li class="page-item @(Model.ListaMatricula.PageNumber > 1 ? "enabled" : "disabled")">
+                <a class="page-link" href="/Matriculas/Index">First</a>
+            </li>
+            <li class="page-item @(Model.ListaMatricula.PageNumber > 1 ? "enabled" : "disabled")">
+                <a class="page-link" href="/Matriculas/Index/?pageNumber=@(Model.ListaMatricula.PageNumber - 1)">Prev</a>
+            </li>
+
+            @foreach (var pageNumber in Model.ListaMatricula.PageNumbers)
+            {
+                <li class="page-item @(pageNumber == Model.ListaMatricula.PageNumber ? "active" : "")">
+                    <a class="page-link" href="/Matriculas/Index/?pageNumber=@pageNumber">@pageNumber</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.ListaMatricula.PageNumber < Model.ListaMatricula.TotalPages ? "enabled" : "disabled")">
+                <a class="page-link" href="/Matriculas/Index/?pageNumber=@(Model.ListaMatricula.PageNumber + 1)">Next</a>
+            </li>
+            <li class="page-item @(Model.ListaMatricula.PageNumber < Model.ListaMatricula.TotalPages ? "enabled" : "disabled")">
+                <a class="page-link" href="/Matriculas/Index/?pageNumber=@(Model.ListaMatricula.TotalPages)">Last</a>
+            </li>
+        </ul>
+    </nav>
+}

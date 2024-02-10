@@ -1,0 +1,13 @@
+﻿CREATE PROC [dbo].[usp_CIDADEDelete] 
+    @CODIGO smallint
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	DELETE
+	FROM   [dbo].[CIDADE]
+	WHERE  [CODIGO] = @CODIGO
+
+	COMMIT

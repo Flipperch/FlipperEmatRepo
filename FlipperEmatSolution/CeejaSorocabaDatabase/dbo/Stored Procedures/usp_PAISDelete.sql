@@ -1,0 +1,13 @@
+﻿CREATE PROC [dbo].[usp_PAISDelete] 
+    @CODIGO tinyint
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	DELETE
+	FROM   [dbo].[PAIS]
+	WHERE  [CODIGO] = @CODIGO
+
+	COMMIT

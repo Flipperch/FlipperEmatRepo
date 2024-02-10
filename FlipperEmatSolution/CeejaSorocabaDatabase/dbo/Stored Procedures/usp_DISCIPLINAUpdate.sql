@@ -1,0 +1,25 @@
+﻿CREATE PROC [dbo].[usp_DISCIPLINAUpdate] 
+    @CODIGO tinyint,
+    @NOME varchar(MAX) = NULL,
+    @NOME_HISTORICO varchar(MAX) = NULL,
+    @HORARIO varchar(MAX) = NULL,
+    @CAPACIDADE varchar(MAX) = NULL,
+    @ORDEM tinyint = NULL,
+    @BLOQ_ATRIBUICAO bit = NULL
+AS 
+	SET NOCOUNT ON 
+	SET XACT_ABORT ON  
+	
+	BEGIN TRAN
+
+	UPDATE [dbo].[DISCIPLINA]
+	SET    [NOME] = @NOME, [NOME_HISTORICO] = @NOME_HISTORICO, [HORARIO] = @HORARIO, [CAPACIDADE] = @CAPACIDADE, [ORDEM] = @ORDEM, [BLOQ_ATRIBUICAO] = @BLOQ_ATRIBUICAO
+	WHERE  [CODIGO] = @CODIGO
+	
+	-- Begin Return Select <- do not remove
+	SELECT [CODIGO], [NOME], [NOME_HISTORICO], [HORARIO], [CAPACIDADE], [ORDEM], [BLOQ_ATRIBUICAO]
+	FROM   [dbo].[DISCIPLINA]
+	WHERE  [CODIGO] = @CODIGO	
+	-- End Return Select <- do not remove
+
+	COMMIT
